@@ -1,0 +1,35 @@
+{
+  "name": "tokenico",
+  "version": "1.0.0",
+  "description": "ico bubble chart",
+  "main": "entry.js",
+  "dependencies": {
+    "d3": "^4.10.0",
+    "d3-tip": "^0.7.1",
+    "webpack": "^3.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "html-webpack-plugin": "^2.30.1"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "start": "webpack-dev-server",
+    "webpack": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkymaze/tokenICO.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inkymaze/tokenICO/issues"
+  },
+  "homepage": "https://github.com/inkymaze/tokenICO#readme",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": []
+}
