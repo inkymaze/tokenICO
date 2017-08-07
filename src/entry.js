@@ -169,8 +169,8 @@ d3.tip = d3Tip;
                 "Token Sale Price: " + d.token_sale_price + "<br/>" +
                 "Current Token Price: $" + d.current_token_price + "<br/>" +
                 "Token ROI: " + d.token_return + "x" + "<br/>" +
-                "ERC-20 Protocol: " + d.erc20 +
-                '<a href= "http://google.com">')
+                "ERC-20 Protocol: " + d.erc20 + "<br/>" +
+                "--click for Whitepaper--")
 
 
 
@@ -185,7 +185,7 @@ d3.tip = d3Tip;
                .duration(500)
                .style("opacity", 0);
         })
-        .on("click", function(d) {window.open(d.logo_path); });
+        .on("click", function(d) {window.open(d.link); });
 
     d3.select("#year").on('click', function() {
       svg.selectAll('.erc20').remove();
