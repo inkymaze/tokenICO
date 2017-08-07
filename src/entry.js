@@ -191,18 +191,26 @@ d3.tip = d3Tip;
       svg.selectAll('.erc20').remove();
       showYears();
       simulation.force("xAxis", forceXsplit)
-      .force("yAxis", d3.forceY(height / 2).strength(0.03))
+      .force("yAxis", d3.forceY(height / 2).strength(0.02))
+      .force("preventCollide", d3.forceCollide(function(d) {
+        return bubbleScale(d.usd_raised) + 3;
+
+      }))
 
         .alphaTarget(0.5)
         .restart();
     });
 
+
+
+
     d3.select("#erc20").on('click', function() {
        svg.selectAll('.year').remove();
        showErc();
       simulation.force("xAxis", forceXErcSplit)
+      .force("yAxis", d3.forceY(height / 2).strength(0.02))
       .force("preventCollide", d3.forceCollide(function(d) {
-        return bubbleScale(d.usd_raised) + 1;
+        return bubbleScale(d.usd_raised) + 3;
 
       }))
         .alphaTarget(0.5)
