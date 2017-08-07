@@ -158,22 +158,25 @@ d3.tip = d3Tip;
            div.transition()
                .duration(200)
                .style("opacity", .95);
-               div.attr("fill",
-                  "url(#" + d.logo_path + ")"
-               );
+
+
                div.html(
 
                  d.name + "<br/>" +
                 "USD Raised: $" + d.usd_raised + "<br/>" +
                 "Date: " + d.month + "<br/>" +
                 "Token Sale Price: " + d.token_sale_price + "<br/>" +
-                "Current Token Price: $" + d.current_token_price + "<br/>" +
-                "Token ROI: " + d.token_return + "x" + "<br/>" +
                 "ERC-20 Protocol: " + d.erc20 + "<br/>" +
-                "--click for Whitepaper--")
+                "--click for Whitepaper--");
+                div.append("img")
+                                 .attr("src", d.logo_path)
+                                 .attr("x", -8)
+                                 .attr("y", -8)
+                                 .attr("width","30px")
+                                 .attr("height","30px")
 
 
-
+                .style("fill", d.logo_path)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
            })
