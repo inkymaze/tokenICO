@@ -38,7 +38,11 @@ d3.tip = d3Tip;
     let div = d3.select("body").append("div")
       .attr("class", "tooltip")
 
+
         .style("opacity", 0);
+
+
+
 
     let yearsTitleX = {
     2014: 150,
@@ -150,10 +154,13 @@ d3.tip = d3Tip;
 
         // loads details of each bubble which will zoom later on click
         .on("mouseover", function(d) {
-            console.log(d.logo_path);
+
            div.transition()
                .duration(200)
                .style("opacity", .95);
+               div.attr("fill",
+                  "url(#" + d.logo_path + ")"
+               );
                div.html(
 
                  d.name + "<br/>" +
@@ -170,12 +177,15 @@ d3.tip = d3Tip;
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
            })
+           .on("mousemove", function(){return div.style("top", (event.pageY-
+                                     10)+"px").style("left",(event.pageX+10)+"px");})
 
        .on("mouseout", function(d) {
            div.transition()
                .duration(500)
                .style("opacity", 0);
-        });
+        })
+        .on("click", function(d) {window.open(d.logo_path); });
 
     d3.select("#year").on('click', function() {
       svg.selectAll('.erc20').remove();
