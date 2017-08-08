@@ -116,6 +116,10 @@ margin-right: 5%;
   fill: none;
 }
 
+.token {
+  border: 1px solid black;
+}
+
 .bubbleKey{
 position: absolute;
 top: 210px;

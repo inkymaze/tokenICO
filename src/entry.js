@@ -40,19 +40,13 @@ d3.tip = d3Tip;
         .style("opacity", 0);
 
     let scaleKey = d3.select("svg").append("circle")
-      .attr("class", "scaleKey")
-      ;
-
-
-
-
+      .attr("class", "scaleKey");
 
     let yearsTitleX = {
     2014: 150,
     2015: 400,
     2016: 750,
     2017: 1200
-
     };
 
     let ercValuesX = {
@@ -68,7 +62,7 @@ d3.tip = d3Tip;
       years.enter().append('text')
       .attr('class', 'year')
       .attr('x', function (d) { return yearsTitleX[d]; })
-      .attr('y', 200)
+      .attr('y', 170)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }
@@ -87,7 +81,8 @@ d3.tip = d3Tip;
     }
 
     let simulation = d3.forceSimulation()
-      .force('center', d3.forceCenter(width / 2, height / 2))
+    .force("xAxis", d3.forceX(width / 2).strength(0.03))
+    .force("yAxis", d3.forceY(height / 2).strength(0.03))
 
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 1;
@@ -198,7 +193,7 @@ d3.tip = d3Tip;
       simulation
 
       .force("xAxis", forceXsplit)
-      .force("yAxis", d3.forceY(height / 2).strength(0.05))
+      .force("yAxis", d3.forceY(height / 2).strength(0.03))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 3;
 
@@ -230,12 +225,14 @@ d3.tip = d3Tip;
     d3.select("#erc20").on('click', function() {
        svg.selectAll('.year').remove();
        showErc();
-      simulation.force("xAxis", forceXErcSplit).velocityDecay(0.6)
-      .force("yAxis", d3.forceY(height / 2).strength(0.05))
+      simulation.force("xAxis", forceXErcSplit)
+      .force('charge', d3.forceManyBody().strength(-0.1))
+      .force("yAxis", d3.forceY(height / 2).strength(0.03))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 3;
 
       }))
+      .velocityDecay(0.5)
         .alphaTarget(0.5)
         .restart();
     });
