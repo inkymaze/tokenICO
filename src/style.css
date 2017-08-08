@@ -116,6 +116,14 @@ margin-right: 5%;
   fill: none;
 }
 
+.outerChart {
+  width: 90%;
+height: 50%;
+display: flex;
+justify-content: center;
+margin: 0 auto;
+}
+
                                        .scaleKey {
                                          width: 100%;
  height: 100%;
