@@ -25,7 +25,7 @@ d3.tip = d3Tip;
       } else {
         return 150;
       }
-    }).strength(0.03);
+    }).strength(0.05);
 
     let forceXErcSplit = d3.forceX(function(d) {
       if(d.erc20 === "TRUE") {
@@ -33,13 +33,13 @@ d3.tip = d3Tip;
       } else {
       return 300;
       }
-    }).strength(0.03);
+    }).strength(0.05);
 
     let div = d3.select("body").append("div")
       .attr("class", "tooltip")
         .style("opacity", 0);
 
-    let scaleKey = d3.select("div").append("circle")
+    let scaleKey = d3.select("svg").append("circle")
       .attr("class", "scaleKey")
       ;
 
@@ -87,9 +87,8 @@ d3.tip = d3Tip;
     }
 
     let simulation = d3.forceSimulation()
+      .force('center', d3.forceCenter(width / 2, height / 2))
 
-      .force("xAxis", d3.forceX(width / 2).strength(0.03))
-      .force("yAxis", d3.forceY(height / 2).strength(0.03))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 1;
       }));
@@ -142,20 +141,20 @@ d3.tip = d3Tip;
           return bubbleScale(d.usd_raised);
         })
         .attr("fill",
-        function(d) {
-              if(d.roi === "BLUE") {
-              return "#14303D";
-            } else if (d.roi === "RED") {
-              return "#d84b2a";
-            } else {
-              return "#7aa25c";
-            }
-          })
+        // function(d) {
+        //       if(d.roi === "BLUE") {
+        //       return "#14303D";
+        //     } else if (d.roi === "RED") {
+        //       return "#d84b2a";
+        //     } else {
+        //       return "#7aa25c";
+        //     }
+        //   })
 
         // loads bubbles with logos but freezes browser
-        // function(d) {
-        //   return "url(#" + d.name.replace(/ /g, "-") + ")";
-        // })
+        function(d) {
+          return "url(#" + d.name.replace(/ /g, "-") + ")";
+        })
 
         // loads details of each bubble which will zoom later on click
         .on("mouseover", function(d) {
@@ -194,11 +193,12 @@ d3.tip = d3Tip;
 
     d3.select("#year").on('click', function() {
       svg.selectAll('.erc20').remove();
+
       showYears();
       simulation
 
       .force("xAxis", forceXsplit)
-      .force("yAxis", d3.forceY(height / 2).strength(0.02))
+      .force("yAxis", d3.forceY(height / 2).strength(0.05))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 3;
 
@@ -217,12 +217,12 @@ d3.tip = d3Tip;
        .attr('r', bubbleScale(10000000))
        .attr('class',"scaleKeyCircle")
        .attr('cx', 30)
-       .attr('cy', 50);
+       .attr('cy', 68);
      d3.select("#scaleKey").append("circle")
        .attr('r', bubbleScale(1000000))
        .attr('class',"scaleKeyCircle")
        .attr('cx', 30)
-       .attr('cy', 55);
+       .attr('cy', 78);
 
 
 
@@ -230,8 +230,8 @@ d3.tip = d3Tip;
     d3.select("#erc20").on('click', function() {
        svg.selectAll('.year').remove();
        showErc();
-      simulation.force("xAxis", forceXErcSplit)
-      .force("yAxis", d3.forceY(height / 2).strength(0.02))
+      simulation.force("xAxis", forceXErcSplit).velocityDecay(0.6)
+      .force("yAxis", d3.forceY(height / 2).strength(0.05))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 3;
 

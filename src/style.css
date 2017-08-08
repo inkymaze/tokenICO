@@ -116,6 +116,15 @@ margin-right: 5%;
   fill: none;
 }
 
+.bubbleKey{
+position: absolute;
+top: 210px;
+left: 10px;
+width: 200px;
+margin: 0;
+padding: 0;
+overflow: hidden;
+}
 .outerChart {
   width: 90%;
 height: 50%;
