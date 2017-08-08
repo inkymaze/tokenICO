@@ -37,9 +37,12 @@ d3.tip = d3Tip;
 
     let div = d3.select("body").append("div")
       .attr("class", "tooltip")
-
-
         .style("opacity", 0);
+
+    let scaleKey = d3.select("div").append("circle")
+      .attr("class", "scaleKey")
+      ;
+
 
 
 
@@ -105,6 +108,7 @@ d3.tip = d3Tip;
     // scale the bubble proportionally give dollar range to px
     let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([4,87]);
 
+
     function loaded(error, data) {
 
       defs.selectAll(".token-logo")
@@ -122,7 +126,8 @@ d3.tip = d3Tip;
         .append("image")
         .attr("height", 1)
         .attr("width", 1)
-        .attr("preserveAspectRatio", "none")
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .attr("viewBox", "0 0 300 300")
         .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
         .attr("xlink:href", function(d) {
           return d.logo_path;
@@ -173,10 +178,6 @@ d3.tip = d3Tip;
 
                                  .attr("width","50px")
                                  .attr("height","50px")
-
-
-
-
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
            })
@@ -190,10 +191,13 @@ d3.tip = d3Tip;
         })
         .on("click", function(d) {window.open(d.link); });
 
+
     d3.select("#year").on('click', function() {
       svg.selectAll('.erc20').remove();
       showYears();
-      simulation.force("xAxis", forceXsplit)
+      simulation
+
+      .force("xAxis", forceXsplit)
       .force("yAxis", d3.forceY(height / 2).strength(0.02))
       .force("preventCollide", d3.forceCollide(function(d) {
         return bubbleScale(d.usd_raised) + 3;
@@ -203,6 +207,22 @@ d3.tip = d3Tip;
         .alphaTarget(0.5)
         .restart();
     });
+
+    d3.select("#scaleKey").append("circle")
+       .attr('r', bubbleScale(100000000))
+       .attr('class',"scaleKeyCircle")
+       .attr('cx', 30)
+       .attr('cy', 30);
+     d3.select("#scaleKey").append("circle")
+       .attr('r', bubbleScale(10000000))
+       .attr('class',"scaleKeyCircle")
+       .attr('cx', 30)
+       .attr('cy', 50);
+     d3.select("#scaleKey").append("circle")
+       .attr('r', bubbleScale(1000000))
+       .attr('class',"scaleKeyCircle")
+       .attr('cx', 30)
+       .attr('cy', 55);
 
 
 
@@ -223,6 +243,8 @@ d3.tip = d3Tip;
     // nodes equal circle/circles in this case
     simulation.nodes(data)
       .on('tick', ticked);
+
+
 
     function ticked() {
       circle

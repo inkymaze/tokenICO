@@ -17031,6 +17031,8 @@ d3.tip = _d3Tip2.default;
 
   var div = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
+  var scaleKey = d3.select("div").append("circle").attr("class", "scaleKey");
+
   var yearsTitleX = {
     2014: 150,
     2015: 400,
@@ -17072,7 +17074,7 @@ d3.tip = _d3Tip2.default;
 
   // upload the csv file
   // await callback pauses the async function and only fires after csv files loads
-  d3.queue().defer(d3.csv, 'tokenData2.csv').await(loaded);
+  d3.queue().defer(d3.csv, 'tokenInfo2.csv').await(loaded);
 
   // defines svg content for resuable component
   // appending a pattern tag which uploads the token logo
@@ -17089,7 +17091,7 @@ d3.tip = _d3Tip2.default;
     defs.selectAll(".token-logo").data(data).enter().append("pattern").attr("class", ".token-logo").attr("id", function (d) {
       // must using global regex to replace more then one space
       return d.name.replace(/ /g, "-");
-    }).attr("height", "100%").attr("width", "100%").attr("patternContentUnits", "objectBoundingBox").append("image").attr("height", 1).attr("width", 1).attr("preserveAspectRatio", "none").attr("xmlns:xlink", "http://www.w3.org/1999/xlink").attr("xlink:href", function (d) {
+    }).attr("height", "100%").attr("width", "100%").attr("patternContentUnits", "objectBoundingBox").append("image").attr("height", 1).attr("width", 1).attr("preserveAspectRatio", "xMidYMid meet").attr("viewBox", "0 0 300 300").attr("xmlns:xlink", "http://www.w3.org/1999/xlink").attr("xlink:href", function (d) {
       return d.logo_path;
     });
 
@@ -17114,23 +17116,36 @@ d3.tip = _d3Tip2.default;
 
     // loads details of each bubble which will zoom later on click
     .on("mouseover", function (d) {
+
       div.transition().duration(200).style("opacity", .95);
-      div.html(d.name + "<br/>" + "USD Raised: $" + d.usd_raised + "<br/>" + "Date: " + d.month + "<br/>" + "Token Sale Price: " + d.token_sale_price + "<br/>" + "Current Token Price: $" + d.current_token_price + "<br/>" + "Token ROI: " + d.token_return + "x" + "<br/>" + "ERC-20 Protocol: " + d.erc20).style("left", d3.event.pageX + "px").style("top", d3.event.pageY - 28 + "px");
+
+      div.html("<br/>" + d.name + "<br/>" + "USD Raised: $" + d.usd_raised + "<br/>" + "Date: " + d.month + "<br/>" + "Token Sale Price: " + d.token_sale_price + "<br/>" + "ERC-20 Protocol: " + d.erc20 + "<br/>" + "--click for Whitepaper--" + "<br/>");
+      div.append("img").attr("src", d.logo_path).attr("width", "50px").attr("height", "50px").style("left", d3.event.pageX + "px").style("top", d3.event.pageY - 28 + "px");
+    }).on("mousemove", function () {
+      return div.style("top", event.pageY - 10 + "px").style("left", event.pageX + 10 + "px");
     }).on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
+    }).on("click", function (d) {
+      window.open(d.link);
     });
 
     d3.select("#year").on('click', function () {
       svg.selectAll('.erc20').remove();
       showYears();
-      simulation.force("xAxis", forceXsplit).force("yAxis", d3.forceY(height / 2).strength(0.03)).alphaTarget(0.5).restart();
+      simulation.force("xAxis", forceXsplit).force("yAxis", d3.forceY(height / 2).strength(0.02)).force("preventCollide", d3.forceCollide(function (d) {
+        return bubbleScale(d.usd_raised) + 3;
+      })).alphaTarget(0.5).restart();
     });
+
+    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(100000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 30);
+    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(10000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 50);
+    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(1000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 55);
 
     d3.select("#erc20").on('click', function () {
       svg.selectAll('.year').remove();
       showErc();
-      simulation.force("xAxis", forceXErcSplit).force("preventCollide", d3.forceCollide(function (d) {
-        return bubbleScale(d.usd_raised) + 1;
+      simulation.force("xAxis", forceXErcSplit).force("yAxis", d3.forceY(height / 2).strength(0.02)).force("preventCollide", d3.forceCollide(function (d) {
+        return bubbleScale(d.usd_raised) + 3;
       })).alphaTarget(0.5).restart();
     });
 
