@@ -17019,7 +17019,7 @@ d3.tip = _d3Tip2.default;
     } else {
       return 150;
     }
-  }).strength(0.03);
+  }).strength(0.05);
 
   var forceXErcSplit = d3.forceX(function (d) {
     if (d.erc20 === "TRUE") {
@@ -17027,18 +17027,17 @@ d3.tip = _d3Tip2.default;
     } else {
       return 300;
     }
-  }).strength(0.03);
+  }).strength(0.05);
 
   var div = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 
-  var scaleKey = d3.select("div").append("circle").attr("class", "scaleKey");
+  var scaleKey = d3.select("svg").append("circle").attr("class", "scaleKey");
 
   var yearsTitleX = {
     2014: 150,
     2015: 400,
     2016: 750,
     2017: 1200
-
   };
 
   var ercValuesX = {
@@ -17052,7 +17051,7 @@ d3.tip = _d3Tip2.default;
 
     years.enter().append('text').attr('class', 'year').attr('x', function (d) {
       return yearsTitleX[d];
-    }).attr('y', 200).attr('text-anchor', 'middle').text(function (d) {
+    }).attr('y', 135).attr('text-anchor', 'middle').text(function (d) {
       return d;
     });
   }
@@ -17084,7 +17083,7 @@ d3.tip = _d3Tip2.default;
   // first arg must be the first error that may occur
 
   // scale the bubble proportionally give dollar range to px
-  var bubbleScale = d3.scaleSqrt().domain([115500, 230498884]).range([4, 87]);
+  var bubbleScale = d3.scaleSqrt().domain([115500, 230498884]).range([8, 87]);
 
   function loaded(error, data) {
 
@@ -17099,20 +17098,21 @@ d3.tip = _d3Tip2.default;
     // give the radius of bubble appropriate scale
     .attr("r", function (d) {
       return bubbleScale(d.usd_raised);
-    }).attr("fill", function (d) {
-      if (d.roi === "BLUE") {
-        return "#14303D";
-      } else if (d.roi === "RED") {
-        return "#d84b2a";
-      } else {
-        return "#7aa25c";
-      }
-    })
+    }).attr("fill",
+    // function(d) {
+    //       if(d.roi === "BLUE") {
+    //       return "#14303D";
+    //     } else if (d.roi === "RED") {
+    //       return "#d84b2a";
+    //     } else {
+    //       return "#7aa25c";
+    //     }
+    //   })
 
     // loads bubbles with logos but freezes browser
-    // function(d) {
-    //   return "url(#" + d.name.replace(/ /g, "-") + ")";
-    // })
+    function (d) {
+      return "url(#" + d.name.replace(/ /g, "-") + ")";
+    })
 
     // loads details of each bubble which will zoom later on click
     .on("mouseover", function (d) {
@@ -17131,22 +17131,23 @@ d3.tip = _d3Tip2.default;
 
     d3.select("#year").on('click', function () {
       svg.selectAll('.erc20').remove();
+
       showYears();
-      simulation.force("xAxis", forceXsplit).force("yAxis", d3.forceY(height / 2).strength(0.02)).force("preventCollide", d3.forceCollide(function (d) {
+      simulation.force("xAxis", forceXsplit).force("yAxis", d3.forceY(height / 2).strength(0.03)).force("preventCollide", d3.forceCollide(function (d) {
         return bubbleScale(d.usd_raised) + 3;
-      })).alphaTarget(0.5).restart();
+      })).velocityDecay(0.5).alphaTarget(0.5).restart();
     });
 
     d3.select("#scaleKey").append("circle").attr('r', bubbleScale(100000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 30);
-    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(10000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 50);
-    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(1000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 55);
+    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(10000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 68);
+    d3.select("#scaleKey").append("circle").attr('r', bubbleScale(1000000)).attr('class', "scaleKeyCircle").attr('cx', 30).attr('cy', 78);
 
     d3.select("#erc20").on('click', function () {
       svg.selectAll('.year').remove();
       showErc();
-      simulation.force("xAxis", forceXErcSplit).force("yAxis", d3.forceY(height / 2).strength(0.02)).force("preventCollide", d3.forceCollide(function (d) {
+      simulation.force("xAxis", forceXErcSplit).force('charge', d3.forceManyBody().strength(-0.1)).force("yAxis", d3.forceY(height / 2).strength(0.03)).force("preventCollide", d3.forceCollide(function (d) {
         return bubbleScale(d.usd_raised) + 3;
-      })).alphaTarget(0.5).restart();
+      })).velocityDecay(0.5).alphaTarget(0.5).restart();
     });
 
     // nodes equal circle/circles in this case
@@ -17480,7 +17481,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
       return bbox
     }
-    
+
     // Private - replace D3JS 3.X d3.functor() function
     function functor(v) {
     	return typeof v === "function" ? v : function() {
@@ -17496,4 +17497,3 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=index_bundle.js.map
