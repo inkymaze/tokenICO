@@ -21,7 +21,8 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "webpack": "webpack"
 
   },
   "repository": {

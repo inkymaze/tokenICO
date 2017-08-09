@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>tokenICO</title>
+
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+
+
+    <script src="src/moreinfo.js"></script>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+
+    <div class="nav-bar">
+      <h1 class="title">Initial Coin Offerings</h1>
+      <button class="nav-button" onclick="moreInfoModal()">More Info</button>
+    </div>
+
+
+    <dialog id="moreinfo" class="info">
+      <button id="close-out" class="x-button" onclick="closeModal()"  />X</button>
+      </br>
+      <div>
+        An initial coin offering or ICO has rapidly become a way to raise money for a particular project using cryptocurrency via a blockchain. The crowdfunding manner of ICOs has recently overtaken the capital raised from tradition venture capital backing in the space.
+        </br>
+        </br>
+        Hover over any bubble to display information regarding the corresponding token.
+        </br>
+        </br>
+        Toggle through the filters to see the meteoric rise of ICO money raised over the years. Or which tokens follow the
+
+        <a href="https://themerkle.com/what-is-the-erc20-ethereum-token-standard/">ERC-20</a> token standard.
+      </div>
+    </dialog>
+
+    <div class="colorKey">
+       <h3 class="keyTitle">Return On Investment</h3>
+      <ul>
+
+        <li> Red = Negative Return </li>
+        <li> Green = Positive Return </li>
+        <li> Blue = Not yet traded </li>
+      </ul>
+    </div>
+
+    <div class="outerChart">
+      <div class="bubbleKey">
+        <p>Bubbles are sized according to USD raised at offering</p>
+        <svg id="scaleKey" ></svg>
+      </div>
+      <div id="chartCont" class="chart">
+        <input id="year" class="nav-button" type="button" value="By Year" />
+        <input id="erc20" class="nav-button" type="button" value="ERC-20 Tokens" />
+      </div>
+
+    </div>
+
+
+      <script src="./index_bundle.js"></script>
+  <script type="text/javascript" src="index_bundle.js"></script></body>
+</html>
