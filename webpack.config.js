@@ -5,22 +5,16 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body'
 });
-
 module.exports = {
   entry: './src/entry.js',
-
   output: {
-    filename: './index_bundle.js'
-},
-
+    path: path.resolve('dist'),
+    filename: 'index_bundle.js'
+  },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
-     ]
- },
- devtool: 'source-maps',
-
-
-
- plugins: [HtmlWebpackPluginConfig]
+    ]
+  },
+  plugins: [HtmlWebpackPluginConfig]
 };
