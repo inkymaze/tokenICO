@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="src/style.css">
 
+              <script src="./index_bundle.js"></script>
 
     <script src="src/moreinfo.js"></script>
   </head>
@@ -13,7 +14,6 @@
     <script src="https://d3js.org/d3.v4.js"></script>
 
 
-          <script src="./index_bundle.js"></script>
     <div class="nav-bar">
       <h1 class="title">Initial Coin Offerings</h1>
       <button class="nav-button" onclick="moreInfoModal()">More Info</button>
@@ -58,6 +58,9 @@
 
     </div>
 
+    window.addEventListener('DOMContentLoaded',()=>{
+          bubbleChart();
+        });
 
   </body>
 </html>
