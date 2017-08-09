@@ -149,6 +149,22 @@ position: relative;
                                            position: relative;
                                        }
 
+
+.scaleTag {
+  font-size: 72%;
+line-height: 1.5em;
+}
+
+.scaleTag span {
+  color: #999;
+position: absolute;
+display: block;
+left: 133px;
+bottom: 37px;
+/* width: 116px; */
+z-index: 100;
+}
+
 .chartCont {
   position: absolute;
  top: 0;
