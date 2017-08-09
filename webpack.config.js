@@ -8,8 +8,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
   entry: './src/entry.js',
   output: {
-    path: path.resolve('dist'),
-    filename: 'index_bundle.js'
+  
+      filename: './index_bundle.js'
   },
   module: {
     loaders: [
