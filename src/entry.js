@@ -136,20 +136,20 @@ d3.tip = d3Tip;
           return bubbleScale(d.usd_raised);
         })
         .attr("fill",
-        // function(d) {
-        //       if(d.roi === "BLUE") {
-        //       return "#14303D";
-        //     } else if (d.roi === "RED") {
-        //       return "#d84b2a";
-        //     } else {
-        //       return "#7aa25c";
-        //     }
-        //   })
+        function(d) {
+              if(d.roi === "BLUE") {
+              return "#14303D";
+            } else if (d.roi === "RED") {
+              return "#d84b2a";
+            } else {
+              return "#7aa25c";
+            }
+          })
 
         // loads bubbles with logos but freezes browser
-        function(d) {
-          return "url(#" + d.name.replace(/ /g, "-") + ")";
-        })
+        // function(d) {
+        //   return "url(#" + d.name.replace(/ /g, "-") + ")";
+        // })
 
         // loads details of each bubble which will zoom later on click
         .on("mouseover", function(d) {
