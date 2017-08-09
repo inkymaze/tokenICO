@@ -13,11 +13,11 @@ $(document).ready(function(){
 });
 </script>
 
-
+    <script src="https://d3js.org/d3.v4.js"></script>
     <script src="src/moreinfo.js"></script>
   </head>
   <body>
-    <script src="https://d3js.org/d3.v4.js"></script>
+
 
 
     <div class="nav-bar">
@@ -26,8 +26,8 @@ $(document).ready(function(){
     </div>
 
 
-    <dialog id="moreinfo" class="info">
-      <button id="close-out" class="x-button" onclick="closeModal()"  />X</button>
+    <dialog id="moreinfo" class="info" style="z-index: 1000;">
+      <button id="close-out" class="x-button" onclick="closeModal()" style="z-index: 1000;" />X</button>
       </br>
       <div>
         An initial coin offering or ICO has rapidly become a way to raise money for a particular project using cryptocurrency via a blockchain. The crowdfunding manner of ICOs has recently overtaken the capital raised from tradition venture capital backing in the space.
@@ -267,7 +267,7 @@ $(document).ready(function(){
                    "<br/>" + d.name + "<br/>" +
                    "USD Raised: $" + d.usd_raised + "<br/>" +
                    "Date: " + d.month + "<br/>" +
-                   "Token Sale Price: " + d.token_sale_price + "<br/>" +
+                   "Token Sale Price: $" + d.token_sale_price + "<br/>" +
                    "ERC-20 Protocol: " + d.erc20 + "<br/>" +
                    "--click for Whitepaper--" + "<br/>");
                    div.append("img")
@@ -344,5 +344,6 @@ $(document).ready(function(){
    })();
 
     </script>
+
   </body>
 </html>
