@@ -20,9 +20,9 @@
     "html-webpack-plugin": "^2.30.1"
   },
   "scripts": {
-    "build": "babel src -d lib",
-    "start": "webpack-dev-server",
-    "webpack": "webpack"
+    "build": "babel src -d src",
+    "start": "webpack-dev-server"
+
 
   },
   "repository": {

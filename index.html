@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>tokenICO</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="src/style.css">
-
+    <script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("div.bubbleKey").hide(50);
+    });
+});
+</script>
 
 
     <script src="src/moreinfo.js"></script>
@@ -16,7 +22,7 @@
 
     <div class="nav-bar">
       <h1 class="title">Initial Coin Offerings</h1>
-      <button class="nav-button" onclick="moreInfoModal()">More Info</button>
+      <button class="nav-button1" onclick="moreInfoModal()">More Info</button>
     </div>
 
 
@@ -36,29 +42,34 @@
       </div>
     </dialog>
 
-    <div class="colorKey">
-       <h3 class="keyTitle">ROI (as of July-2017)</h3>
-      <ul>
 
-        <li> Red = Negative Return </li>
-        <li> Green = Positive Return </li>
-        <li> Blue = Not yet traded </li>
-      </ul>
-    </div>
 
     <div class="outerChart">
+      <div class="colorKey">
+         <h3 class="keyTitle">ROI (as of July-2017)</h3>
+        <ul>
+
+          <li> Red = Negative Return </li>
+          <li> Green = Positive Return </li>
+          <li> Blue = Not yet traded </li>
+        </ul>
+      </div>
 
       <div>
         <div>
-          <input id="year" class="nav-button" type="button" value="By Year" />
-          <input id="erc20" class="nav-button" type="button" value="ERC-20 Tokens" />
+          <button id="year" class="nav-button1">By Year</button>
+          <button id="erc20" class="nav-button2">ERC-20 Tokens</button>
         </div>
         <div class="bubbleMain">
           <div class="bubbleKey">
             <p>Bubbles are sized according to USD raised at offering</p>
-            <div class="scaleTag"><span>$100,000,000</span></div>
-            <div class="scaleTag"><span>$10,000,000</span></div>
-            <div class="scaleTag"><span>$1,000,000</span></div>
+            <div style="left:111px;top:95px;width:25px;"class="scaleTag"><span>$100,000,000</span></div>
+            <div style="left: 79px;top: 150px;width: 56px;" class="scaleTag"><span style="left: 58px;
+    bottom: -9px;">$10,000,000</span></div>
+            <div style="left: 72px;
+    top: 171px;
+    width: 63px;" class="scaleTag"><span style="left: 65px;
+    bottom: -8px;">$1,000,000</span></div>
             <svg id="scaleKey" ></svg>
           </div>
           <div id="chartCont" class="chart"></div>
@@ -66,10 +77,272 @@
       </div>
 
     </div>
+    <script type="text/javascript">
+    (function bubbleChart() {
+     let width = 1500,
+       height = 900;
+
+
+
+       let svg = d3.select("#chartCont")
+         .append("svg")
+         .attr("width", width)
+         .attr("height", height)
+         .append("g")
+         // centers the bubble in the chartCont
+         .attr("transform", "translate(0, 0)");
+
+
+
+         // empty forceX and forceY default to 0
+       let forceXsplit = d3.forceX(function(d) {
+         if(d.year === "2017") {
+           return width * 0.75;
+         } else if (d.year === "2016") {
+           return width * 0.42;
+         } else if (d.year === "2015") {
+           return width * 0.26;
+         } else {
+           return width * 0.1;
+         }
+       }).strength(0.05);
+
+       let forceXErcSplit = d3.forceX(function(d) {
+         if(d.erc20 === "TRUE") {
+         return width * 0.666;
+         } else {
+         return width * 0.2;
+         }
+       }).strength(0.05);
+
+       let div = d3.select("body").append("div")
+         .attr("class", "tooltip")
+           .style("opacity", 0);
+
+
+
+       let yearsTitleX = {
+       2014: width * 0.1,
+       2015: width * 0.26,
+       2016: width * 0.42,
+       2017: width * 0.75
+       };
+
+       let ercValuesX = {
+         'ERC-20': width * 0.666,
+         'Others': width * 0.22
+       };
+
+       function showYears() {
+         let yearsData = d3.keys(yearsTitleX);
+         let years = svg.selectAll('.year')
+         .data(yearsData);
+
+         years.enter().append('text')
+         .attr('class', 'year')
+         .attr('x', function (d) { return yearsTitleX[d]; })
+         .attr('y', height * 0.15)
+         .attr('text-anchor', 'middle')
+         .text(function (d) { return d; });
+       }
+
+       function showScale() {
+         let scaleKey = d3.selectAll(".scaleKey").append("circle")
+           .attr("class", "scaleKey");
+
+           d3.select("#scaleKey").append("circle")
+              .attr('r', bubbleScale(100000000))
+              .attr('class',"scaleKeyCircle")
+              .attr('cx', 60)
+              .attr('cy', 60);
+            d3.select("#scaleKey").append("circle")
+              .attr('r', bubbleScale(10000000))
+              .attr('class',"scaleKeyCircle")
+              .attr('cx', 60)
+              .attr('cy', 98);
+            d3.select("#scaleKey").append("circle")
+              .attr('r', bubbleScale(1000000))
+              .attr('class',"scaleKeyCircle")
+              .attr('cx', 60)
+              .attr('cy', 108);
+
+
+       }
+
+       function showErc() {
+         let ercData = d3.keys(ercValuesX);
+         let ercValues= svg.selectAll('.erc20')
+           .data(ercData);
+
+         ercValues.enter().append('text')
+         .attr('class', 'erc20')
+         .attr('x', function (d) { return ercValuesX[d]; })
+         .attr('y', height * 0.17)
+         .attr('text-anchor', 'middle')
+         .text(function (d) { return d; });
+       }
+
+       let simulation = d3.forceSimulation()
+       .force("xAxis", d3.forceX(width / 2).strength(0.03))
+       .force("yAxis", d3.forceY(height / 2).strength(0.03))
+
+         .force("preventCollide", d3.forceCollide(function(d) {
+           return bubbleScale(d.usd_raised) + 1;
+         }));
+
+       // upload the csv file
+      // await callback pauses the async function and only fires after csv files loads
+       d3.queue().defer(d3.csv, 'tokenInfo2.csv').await(loaded);
+
+       // defines svg content for resuable component
+       // appending a pattern tag which uploads the token logo
+       let defs = svg.append("defs");
+
+       // callback passed to await which formats the bubble
+       // first arg must be the first error that may occur
+
+       // scale the bubble proportionally give dollar range to px
+       let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([5,87]);
+
+
+       function loaded(error, data) {
+
+         defs.selectAll(".token-logo")
+           .data(data)
+           .enter().append("pattern")
+           .attr("class", ".token-logo")
+           .attr("id",
+             function(d) {
+             // must using global regex to replace more then one space
+             return d.name.replace(/ /g, "-");
+           })
+
+           .attr("patternContentUnits", "objectBoundingBox")
+           .append("image")
+           .attr("height", 1)
+           .attr("width", 1)
+           .attr("preserveAspectRatio", "xMidYMid meet")
+           .attr("viewBox", "0 0 300 300")
+           .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+           .attr("xlink:href", function(d) {
+             return d.logo_path;
+           });
+
+           showScale();
+
+         let circle = svg.selectAll("circle")
+           .data(data)
+           .enter().append("circle")
+           .attr("class", "token")
+           // give the radius of bubble appropriate scale
+           .attr("r", function(d) {
+             return bubbleScale(d.usd_raised);
+           })
+           .attr("fill",
+           function(d) {
+                 if(d.roi === "BLUE") {
+                 return "#14303D";
+               } else if (d.roi === "RED") {
+                 return "#d84b2a";
+               } else {
+                 return "#7aa25c";
+               }
+             })
+
+           // loads bubbles with logos but freezes browser
+           // function(d) {
+           //   return "url(#" + d.name.replace(/ /g, "-") + ")";
+           // })
+
+           // loads details of each bubble which will zoom later on click
+           .on("mouseover", function(d) {
+
+              div.transition()
+                  .duration(200)
+                  .style("opacity", .95);
+
+
+                  div.html(
+
+                   "<br/>" + d.name + "<br/>" +
+                   "USD Raised: $" + d.usd_raised + "<br/>" +
+                   "Date: " + d.month + "<br/>" +
+                   "Token Sale Price: " + d.token_sale_price + "<br/>" +
+                   "ERC-20 Protocol: " + d.erc20 + "<br/>" +
+                   "--click for Whitepaper--" + "<br/>");
+                   div.append("img")
+                                    .attr("src", d.logo_path)
+
+                                    .attr("width","50px")
+                                    .attr("height","50px")
+                   .style("left", (d3.event.pageX) + "px")
+                   .style("top", (d3.event.pageY - 28) + "px");
+              })
+              .on("mousemove", function(){return div.style("top", (event.pageY-
+                                        10)+"px").style("left",(event.pageX+10)+"px");})
+
+          .on("mouseout", function(d) {
+              div.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+           })
+           .on("click", function(d) {window.open(d.link); });
+
+
+       d3.select("#year").on('click', function() {
+         svg.selectAll('.erc20').remove();
+
+         showYears();
+         simulation
+
+         .force("xAxis", forceXsplit)
+         .force("yAxis", d3.forceY(height / 2).strength(0.03))
+         .force("preventCollide", d3.forceCollide(function(d) {
+           return bubbleScale(d.usd_raised) + 3;
+
+         }))
+   .velocityDecay(0.5)
+           .alphaTarget(0.5)
+           .restart();
+       });
 
 
 
 
+       d3.select("#erc20").on('click', function() {
+          svg.selectAll('.year').remove();
 
+          showErc();
+         simulation.force("xAxis", forceXErcSplit)
+         .force('charge', d3.forceManyBody().strength(-0.1))
+         .force("yAxis", d3.forceY(height / 2).strength(0.03))
+         .force("preventCollide", d3.forceCollide(function(d) {
+           return bubbleScale(d.usd_raised) + 3;
+
+         }))
+         .velocityDecay(0.5)
+           .alphaTarget(0.5)
+           .restart();
+       });
+
+       // nodes equal circle/circles in this case
+       simulation.nodes(data)
+         .on('tick', ticked);
+
+
+
+       function ticked() {
+         circle
+           .attr("cx", function(d) {
+             return d.x;
+           })
+         .attr("cy", function(d) {
+           return d.y;
+         });
+       }
+     }
+   })();
+
+    </script>
   </body>
 </html>

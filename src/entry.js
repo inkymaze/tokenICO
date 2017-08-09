@@ -2,12 +2,14 @@ import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 d3.tip = d3Tip;
 
-window.addEventListener('DOMContentLoaded',()=>{
 
 
-(function() {
+
+ (function bubbleChart() {
   let width = 1500,
     height = 900;
+
+
 
     let svg = d3.select("#chartCont")
       .append("svg")
@@ -16,6 +18,8 @@ window.addEventListener('DOMContentLoaded',()=>{
       .append("g")
       // centers the bubble in the chartCont
       .attr("transform", "translate(0, 0)");
+
+      
 
       // empty forceX and forceY default to 0
     let forceXsplit = d3.forceX(function(d) {
@@ -42,8 +46,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       .attr("class", "tooltip")
         .style("opacity", 0);
 
-    let scaleKey = d3.select("svg").append("circle")
-      .attr("class", "scaleKey");
+
 
     let yearsTitleX = {
     2014: width * 0.1,
@@ -68,6 +71,29 @@ window.addEventListener('DOMContentLoaded',()=>{
       .attr('y', height * 0.15)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
+    }
+
+    function showScale() {
+      let scaleKey = d3.selectAll(".scaleKey").append("circle")
+        .attr("class", "scaleKey");
+
+        d3.select("#scaleKey").append("circle")
+           .attr('r', bubbleScale(100000000))
+           .attr('class',"scaleKeyCircle")
+           .attr('cx', 60)
+           .attr('cy', 60);
+         d3.select("#scaleKey").append("circle")
+           .attr('r', bubbleScale(10000000))
+           .attr('class',"scaleKeyCircle")
+           .attr('cx', 60)
+           .attr('cy', 98);
+         d3.select("#scaleKey").append("circle")
+           .attr('r', bubbleScale(1000000))
+           .attr('class',"scaleKeyCircle")
+           .attr('cx', 60)
+           .attr('cy', 108);
+
+
     }
 
     function showErc() {
@@ -117,8 +143,7 @@ window.addEventListener('DOMContentLoaded',()=>{
           // must using global regex to replace more then one space
           return d.name.replace(/ /g, "-");
         })
-        .attr("height", "100%")
-        .attr("width", "100%")
+
         .attr("patternContentUnits", "objectBoundingBox")
         .append("image")
         .attr("height", 1)
@@ -129,6 +154,8 @@ window.addEventListener('DOMContentLoaded',()=>{
         .attr("xlink:href", function(d) {
           return d.logo_path;
         });
+
+        showScale();
 
       let circle = svg.selectAll("circle")
         .data(data)
@@ -206,27 +233,12 @@ window.addEventListener('DOMContentLoaded',()=>{
         .restart();
     });
 
-    d3.select("#scaleKey").append("circle")
-       .attr('r', bubbleScale(100000000))
-       .attr('class',"scaleKeyCircle")
-       .attr('cx', 60)
-       .attr('cy', 60);
-     d3.select("#scaleKey").append("circle")
-       .attr('r', bubbleScale(10000000))
-       .attr('class',"scaleKeyCircle")
-       .attr('cx', 60)
-       .attr('cy', 98);
-     d3.select("#scaleKey").append("circle")
-       .attr('r', bubbleScale(1000000))
-       .attr('class',"scaleKeyCircle")
-       .attr('cx', 60)
-       .attr('cy', 108);
-
 
 
 
     d3.select("#erc20").on('click', function() {
        svg.selectAll('.year').remove();
+
        showErc();
       simulation.force("xAxis", forceXErcSplit)
       .force('charge', d3.forceManyBody().strength(-0.1))
@@ -257,4 +269,3 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
   }
 })();
-  });
