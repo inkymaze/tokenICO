@@ -62,7 +62,7 @@ d3.tip = d3Tip;
       years.enter().append('text')
       .attr('class', 'year')
       .attr('x', function (d) { return yearsTitleX[d]; })
-      .attr('y', 170)
+      .attr('y', 135)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }
@@ -100,7 +100,7 @@ d3.tip = d3Tip;
     // first arg must be the first error that may occur
 
     // scale the bubble proportionally give dollar range to px
-    let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([4,87]);
+    let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([8,87]);
 
 
     function loaded(error, data) {
@@ -198,7 +198,7 @@ d3.tip = d3Tip;
         return bubbleScale(d.usd_raised) + 3;
 
       }))
-
+.velocityDecay(0.5)
         .alphaTarget(0.5)
         .restart();
     });
