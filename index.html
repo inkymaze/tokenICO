@@ -79,9 +79,9 @@ $(document).ready(function(){
     </div>
     <script type="text/javascript">
     (function bubbleChart() {
-     let width = 1500,
-       height = 900;
 
+       let width = chartCont.clientWidth;
+       let height = chartCont.clientHeight;
 
 
        let svg = d3.select("#chartCont")
