@@ -2,7 +2,10 @@ import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 d3.tip = d3Tip;
 
-let bubbleChart = (function() {
+window.addEventListener('DOMContentLoaded',()=>{
+
+
+(function() {
   let width = 1500,
     height = 900;
 
@@ -17,21 +20,21 @@ let bubbleChart = (function() {
       // empty forceX and forceY default to 0
     let forceXsplit = d3.forceX(function(d) {
       if(d.year === "2017") {
-        return 1200;
+        return width * 0.75;
       } else if (d.year === "2016") {
-        return 750;
+        return width * 0.42;
       } else if (d.year === "2015") {
-        return 400;
+        return width * 0.26;
       } else {
-        return 150;
+        return width * 0.1;
       }
     }).strength(0.05);
 
     let forceXErcSplit = d3.forceX(function(d) {
       if(d.erc20 === "TRUE") {
-      return 900;
+      return width * 0.666;
       } else {
-      return 300;
+      return width * 0.2;
       }
     }).strength(0.05);
 
@@ -43,15 +46,15 @@ let bubbleChart = (function() {
       .attr("class", "scaleKey");
 
     let yearsTitleX = {
-    2014: 150,
-    2015: 400,
-    2016: 750,
-    2017: 1200
+    2014: width * 0.1,
+    2015: width * 0.26,
+    2016: width * 0.42,
+    2017: width * 0.75
     };
 
     let ercValuesX = {
-      'ERC-20': 900,
-      'Others': 350
+      'ERC-20': width * 0.666,
+      'Others': width * 0.22
     };
 
     function showYears() {
@@ -62,7 +65,7 @@ let bubbleChart = (function() {
       years.enter().append('text')
       .attr('class', 'year')
       .attr('x', function (d) { return yearsTitleX[d]; })
-      .attr('y', 135)
+      .attr('y', height * 0.15)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }
@@ -75,7 +78,7 @@ let bubbleChart = (function() {
       ercValues.enter().append('text')
       .attr('class', 'erc20')
       .attr('x', function (d) { return ercValuesX[d]; })
-      .attr('y', 200)
+      .attr('y', height * 0.17)
       .attr('text-anchor', 'middle')
       .text(function (d) { return d; });
     }
@@ -100,7 +103,7 @@ let bubbleChart = (function() {
     // first arg must be the first error that may occur
 
     // scale the bubble proportionally give dollar range to px
-    let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([8,87]);
+    let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([5,87]);
 
 
     function loaded(error, data) {
@@ -206,18 +209,18 @@ let bubbleChart = (function() {
     d3.select("#scaleKey").append("circle")
        .attr('r', bubbleScale(100000000))
        .attr('class',"scaleKeyCircle")
-       .attr('cx', 30)
-       .attr('cy', 30);
+       .attr('cx', 60)
+       .attr('cy', 60);
      d3.select("#scaleKey").append("circle")
        .attr('r', bubbleScale(10000000))
        .attr('class',"scaleKeyCircle")
-       .attr('cx', 30)
-       .attr('cy', 68);
+       .attr('cx', 60)
+       .attr('cy', 98);
      d3.select("#scaleKey").append("circle")
        .attr('r', bubbleScale(1000000))
        .attr('class',"scaleKeyCircle")
-       .attr('cx', 30)
-       .attr('cy', 78);
+       .attr('cx', 60)
+       .attr('cy', 108);
 
 
 
@@ -254,3 +257,4 @@ let bubbleChart = (function() {
     }
   }
 })();
+  });

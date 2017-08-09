@@ -120,27 +120,33 @@ margin-right: 5%;
   border: 1px solid black;
 }
 
+body {
+    margin: 3%;
+}
+
 .bubbleKey{
 position: absolute;
 top: 210px;
-left: 10px;
+left: 100px;
 width: 200px;
 margin: 0;
+z-index: 33;
 padding: 0;
 overflow: hidden;
+text-align: left;
 }
 .outerChart {
-  width: 90%;
-height: 50%;
-display: flex;
-justify-content: center;
-margin: 0 auto;
+
+
+position: relative;
+    width: 100%;
+    height: 100%;
 }
 
                                        .scaleKey {
                                          width: 100%;
  height: 100%;
-                                           position: absolute;
+                                           position: relative;
                                        }
 
 .chartCont {
