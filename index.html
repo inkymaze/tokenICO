@@ -132,6 +132,16 @@
          'Others': width * 0.22
        };
 
+       function getFillColor(roi) {
+         if(roi === "BLUE") {
+         return "#14303D";
+       } else if (roi === "RED") {
+         return "#d84b2a";
+       } else {
+         return "#7aa25c";
+       }
+       }
+
        function showYears() {
          let yearsData = d3.keys(yearsTitleX);
          let years = svg.selectAll('.year')
@@ -238,16 +248,14 @@
            .attr("r", function(d) {
              return bubbleScale(d.usd_raised);
            })
+
            .attr("fill",
            function(d) {
-                 if(d.roi === "BLUE") {
-                 return "#14303D";
-               } else if (d.roi === "RED") {
-                 return "#d84b2a";
-               } else {
-                 return "#7aa25c";
-               }
+              return getFillColor(d.roi);
              })
+
+            .attr('stroke', function (d) {
+              return d3.rgb(getFillColor(d.roi)).darker(); })
 
            // loads bubbles with logos but freezes browser
           //  function(d) {
@@ -297,16 +305,16 @@
 
 
          simulation
-
+         .force('charge', d3.forceManyBody().strength(-0.01))
          .force("xAxis", forceXsplit)
          .force("yAxis", d3.forceY(height / 2).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
-           return bubbleScale(d.usd_raised) + 3;
+           return bubbleScale(d.usd_raised) + 2;
 
          }))
-   .velocityDecay(0.5)
-           .alphaTarget(0.5)
-           .restart();
+
+          .alphaTarget(0.4)
+          .restart();
        });
 
 
@@ -314,9 +322,7 @@
 
        d3.select("#erc20").on('click', function() {
           svg.selectAll('.year').remove();
-
           showErc();
-
 
          simulation.force("xAxis", forceXErcSplit)
          .force('charge', d3.forceManyBody().strength(-0.1))
@@ -336,6 +342,8 @@
 
        function ticked() {
          circle
+
+
            .attr("cx", function(d) {
              return d.x;
            })
