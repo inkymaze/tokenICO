@@ -121,9 +121,9 @@
 
 
        let yearsTitleX = {
-       2014: width * 0.1,
-       2015: width * 0.26,
-       2016: width * 0.42,
+       2014: width * 0.08,
+       2015: width * 0.21,
+       2016: width * 0.3,
        2017: width * 0.75
        };
 
@@ -305,9 +305,9 @@
 
 
          simulation
-         .force('charge', d3.forceManyBody().strength(-0.01))
+         .force('charge', d3.forceManyBody().strength(-0.5))
          .force("xAxis", forceXsplit)
-         .force("yAxis", d3.forceY(height / 2).strength(0.03))
+         .force("yAxis", d3.forceY(height * 0.5).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
 
@@ -325,7 +325,7 @@
           showErc();
 
          simulation.force("xAxis", forceXErcSplit)
-         .force('charge', d3.forceManyBody().strength(-0.1))
+         
          .force("yAxis", d3.forceY(height / 2).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 3;
