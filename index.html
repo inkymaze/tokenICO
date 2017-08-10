@@ -35,18 +35,10 @@
     </div>
 
     <div class="outerChart">
-      <div class="colorKey">
-         <h3 class="keyTitle">ROI (as of July-2017)</h3>
-        <ul>
 
-          <li> Red = Negative Return </li>
-          <li> Green = Positive Return </li>
-          <li> Blue = Not yet traded </li>
-        </ul>
-      </div>
 
       <div>
-        <div>
+        <div class="filterNavBar">
           <button id="year" class="nav-button1">By Year</button>
           <button id="erc20" class="nav-button2">ERC-20 Tokens</button>
         </div>
@@ -61,6 +53,15 @@
     width: 63px;" class="scaleTag"><span style="left: 65px;
     bottom: -8px;">$1,000,000</span></div>
               <svg id="scaleKey" ></svg>
+              <div class="colorKey">
+                 <h3 class="keyTitle">ROI (as of July-2017)</h3>
+                <ul>
+
+                  <li> Red = Negative Return </li>
+                  <li> Green = Positive Return </li>
+                  <li> Blue = Not yet traded </li>
+                </ul>
+              </div>
           </div>
 
           <div id="chartCont" class="chart" style="display: flex; justify-content: center;"></div>
@@ -92,13 +93,13 @@
          // empty forceX and forceY default to 0
        let forceXsplit = d3.forceX(function(d) {
          if(d.year === "2017") {
-           return width * 0.75;
+           return width * 0.79;
          } else if (d.year === "2016") {
            return width * 0.42;
          } else if (d.year === "2015") {
-           return width * 0.26;
+           return width * 0.21;
          } else {
-           return width * 0.1;
+           return width * 0.08;
          }
        }).strength(0.05);
 

@@ -79,12 +79,8 @@ font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-
 }
 
 .colorKey {
-  display: flex;
-color: #999999;
-font-size: 26px;
-display: flex;
-justify-content: flex-end;
-margin-right: 5%;
+  color: #999999;
+
 }
 
 .info {
@@ -163,6 +159,10 @@ z-index: 33;
 padding: 0;
 overflow: hidden;
 text-align: left;
+
+}
+
+.filterNavBar {
 
 }
 .outerChart {
