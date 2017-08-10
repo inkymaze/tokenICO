@@ -211,6 +211,7 @@ z-index: 100;
 
 .title {
   font-size: 45px;
+  margin-left: 4%;
   font-weight: 200px;
   color: #999999;
   font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
