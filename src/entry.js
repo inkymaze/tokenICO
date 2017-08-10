@@ -19,7 +19,7 @@ d3.tip = d3Tip;
       // centers the bubble in the chartCont
       .attr("transform", "translate(0, 0)");
 
-      
+
 
       // empty forceX and forceY default to 0
     let forceXsplit = d3.forceX(function(d) {
