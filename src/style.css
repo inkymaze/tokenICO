@@ -101,9 +101,9 @@ margin-right: 5%;
 
 .ercAside {
   position: absolute;
-      left: 1051px;
-      top: 250px;
-      width: 108px;
+    left: 85%;
+    top: 42%;
+    width: 10%;
 }
 
 
@@ -155,8 +155,8 @@ html, body, {
 
 .bubbleKey{
 position: absolute;
-top: 210px;
-left: 100px;
+top: 31%;
+left: 7%;
 width: 200px;
 margin: 0;
 z-index: 33;
