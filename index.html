@@ -11,6 +11,20 @@
               $("div.bubbleKey").hide(50);
           });
       });
+      $(document).ready(function() {
+          $("div.ercAside").hide();
+      });
+      $(document).ready(function(){
+          $(".nav-button2").click(function(){
+              $("div.ercAside").show();
+          });
+      });
+      $(document).ready(function(){
+          $(".nav-button1").click(function(){
+              $("div.ercAside").hide();
+          });
+      });
+
     </script>
 
 
@@ -23,7 +37,7 @@
 
 
     <div class="nav-bar">
-      <h1 class="title">Initial Coin Offerings</h1>
+      <h1 class="title">tokenICO</h1>
 
     </div>
 
@@ -50,17 +64,21 @@
         <div class="bubbleMain">
           <div class="bubbleKey">
             <p>Bubbles are sized according to USD raised at offering</p>
-            <div style="left:111px;top:95px;width:25px;"class="scaleTag"><span>$100,000,000</span></div>
-            <div style="left: 79px;top: 150px;width: 56px;" class="scaleTag"><span style="left: 58px;
+            <div style="left:105px;top:95px;width:24px;"class="scaleTag"><span>$100,000,000</span></div>
+            <div style="left: 79px;top: 143px;width: 57px;" class="scaleTag"><span style="left: 58px;
     bottom: -9px;">$10,000,000</span></div>
             <div style="left: 72px;
-    top: 171px;
+    top: 164px;
     width: 63px;" class="scaleTag"><span style="left: 65px;
     bottom: -8px;">$1,000,000</span></div>
               <svg id="scaleKey" ></svg>
           </div>
 
           <div id="chartCont" class="chart" style="display: flex; justify-content: center;"></div>
+
+          <div class="ercAside">
+            <p>Listed on Ethereum network these token can be exchanged with other currencies as well as ensure compatibility with dApps of the same standard protocol</p>
+          </div>
         <div>
       </div>
 
@@ -146,17 +164,17 @@
               .attr('r', bubbleScale(100000000))
               .attr('class',"scaleKeyCircle")
               .attr('cx', 60)
-              .attr('cy', 60);
+              .attr('cy', 55);
             d3.select("#scaleKey").append("circle")
               .attr('r', bubbleScale(10000000))
               .attr('class',"scaleKeyCircle")
               .attr('cx', 60)
-              .attr('cy', 98);
+              .attr('cy', 88);
             d3.select("#scaleKey").append("circle")
               .attr('r', bubbleScale(1000000))
               .attr('class',"scaleKeyCircle")
               .attr('cx', 60)
-              .attr('cy', 108);
+              .attr('cy', 98);
        }
 
        function showErc() {

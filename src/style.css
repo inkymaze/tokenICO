@@ -101,9 +101,9 @@ margin-right: 5%;
 
 .ercAside {
   position: absolute;
-    left: 800px;
-    top: 120px;
-    width: 130px;
+    left: 980px;
+    top: 250px;
+    width: 120px;
 }
 
 
@@ -131,6 +131,7 @@ margin-right: 5%;
    justify-content: center;
 display: flex;
 }
+
 
 .scaleKeyCircle {
   stroke-width: 1;
