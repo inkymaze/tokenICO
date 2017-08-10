@@ -17,7 +17,7 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="src/moreinfo.js"></script>
   </head>
-  <body>
+  <body style="margin: 0;">
 
 
 
@@ -66,7 +66,7 @@
 
     </div>
     <script type="text/javascript">
-    (function bubbleChart() {
+    let bubbleChart = (function() {
 
        let width = chartCont.clientWidth;
        let height = chartCont.clientHeight;
@@ -337,7 +337,11 @@
          });
        }
      }
-   })();
+   });
+
+   window.addEventListener('resize',
+    bubbleChart()
+   );
 
     </script>
 
