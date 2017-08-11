@@ -97,11 +97,11 @@
          if(d.year === "2017") {
            return width * 0.77;
          } else if (d.year === "2016") {
-           return width * 0.42;
+           return width * 0.375;
          } else if (d.year === "2015") {
-           return width * 0.21;
+           return width * 0.16;
          } else {
-           return width * 0.08;
+           return width * 0.04;
          }
        }).strength(0.05);
 
@@ -124,9 +124,9 @@
 
 
        let yearsTitleX = {
-       2014: width * 0.08,
-       2015: width * 0.21,
-       2016: width * 0.42,
+       2014: width * 0.04,
+       2015: width * 0.16,
+       2016: width * 0.375,
        2017: width * 0.75
        };
 
@@ -155,6 +155,7 @@
          .attr('x', function (d) { return yearsTitleX[d]; })
          .attr('y', height * 0.10)
          .attr('text-anchor', 'middle')
+         .attr("fill", "#999999")
          .text(function (d) { return d; });
        }
 
@@ -187,7 +188,8 @@
          ercValues.enter().append('text')
          .attr('class', 'erc20')
          .attr('x', function (d) { return ercValuesX[d]; })
-         .attr('y', height * 0.1)
+         .attr('y', height * 0.085)
+         .attr("fill", "#999999")
          .attr('text-anchor', 'middle')
          .text(function (d) { return d; });
        }
@@ -310,7 +312,7 @@
          simulation
          .force('charge', d3.forceManyBody().strength(-0.5))
          .force("xAxis", forceXsplit)
-         .force("yAxis", d3.forceY(height * 0.5).strength(0.03))
+         .force("yAxis", d3.forceY(height * 0.535).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
 
