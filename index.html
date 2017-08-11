@@ -6,21 +6,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="src/style.css">
     <script>
-      $(document).ready(function(){
-          $("button").click(function(){
-              $("div.bubbleKey").hide(50);
-          });
-      });
+
       $(document).ready(function() {
           $("div.ercAside").hide();
       });
       $(document).ready(function(){
           $(".nav-button2").click(function(){
               $("div.ercAside").show();
+              $("div.bubbleKey").hide(50);
           });
       });
       $(document).ready(function(){
           $(".nav-button1").click(function(){
+              $("div.ercAside").hide();
+              $("div.bubbleKey").hide(50);
+          });
+      });
+      $(document).ready(function(){
+          $("nav-button0").click(function(){
+              $("div.bubbleKey").show();
               $("div.ercAside").hide();
           });
       });
@@ -35,12 +39,13 @@
     </div>
 
     <div class="outerChart">
-      <div class="chartTitle">How crowdfunding is having a meteoric rise</div>
+      <div class="chartTitle">How crowdsales are experiencing a meteoric rise</div>
       <div class="subtitle">Explore initial coin offerings and blockchain token sales below</div>
 
 
       <div>
         <div class="filterNavBar">
+          <button id="alltokens" class="nav-button0">All Tokens</button>
           <button id="year" class="nav-button1">By Year</button>
           <button id="erc20" class="nav-button2">ERC-20 Tokens</button>
         </div>
@@ -196,7 +201,7 @@
 
        let simulation = d3.forceSimulation()
 
-       .force("xAxis", d3.forceX(width * 0.6).strength(0.03))
+       .force("xAxis", d3.forceX(width * 0.7).strength(0.03))
        .force("yAxis", d3.forceY(height * 0.6).strength(0.03))
 
          .force("preventCollide", d3.forceCollide(function(d) {
@@ -258,9 +263,8 @@
            function(d) {
               return getFillColor(d.roi);
              })
-
-            .attr('stroke', function (d) {
-              return d3.rgb(getFillColor(d.roi)).darker(); })
+          .attr('stroke', function (d) {
+            return d3.rgb(getFillColor(d.roi)).darker(); })
 
            // loads bubbles with logos but freezes browser
           //  function(d) {
@@ -268,15 +272,13 @@
           //  })
 
            // loads details of each bubble which will zoom later on click
-           .on("mouseover", function(d) {
+          .on("mouseover", function(d) {
 
               div.transition()
                   .duration(200)
                   .style("opacity", .95);
 
-
                   div.html(
-
                    "<br/>" + d.name + "<br/>" +
                    "USD Raised: $" + d.usd_raised + "<br/>" +
                    "Date: " + d.month + "<br/>" +
@@ -285,14 +287,13 @@
                    "--click for Whitepaper--" + "<br/>");
                    div.append("img")
                                     .attr("src", d.logo_path)
-
                                     .attr("width","50px")
                                     .attr("height","50px")
                    .style("left", (d3.event.pageX) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
               })
-              .on("mousemove", function(){return div.style("top", (event.pageY-
-                                        10)+"px").style("left",(event.pageX+10)+"px");})
+          .on("mousemove", function(){return div.style("top", (event.pageY-
+              10)+"px").style("left",(event.pageX+10)+"px");})
 
           .on("mouseout", function(d) {
               div.transition()
@@ -301,13 +302,9 @@
            })
            .on("click", function(d) {window.open(d.link); });
 
-
-
-
        d3.select("#year").on('click', function() {
          svg.selectAll('.erc20').remove();
          showYears();
-
 
          simulation
          .force('charge', d3.forceManyBody().strength(-0.5))
@@ -315,11 +312,9 @@
          .force("yAxis", d3.forceY(height * 0.535).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
-
          }))
-
-          .alphaTarget(0.4)
-          .restart();
+        .alphaTarget(0.4)
+        .restart();
        });
 
 
