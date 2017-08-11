@@ -32,13 +32,15 @@ div.tooltip {
 .subtitle {
   line-height: 25px;
     font-size: 15px;
+    margin-left: 4%;
 }
 
 .chartTitle {
       line-height: 1.182em;
       font-size: 26px!important;
-    margin-bottom: 4px!important;
-    margin-top: 3px!important;
+    margin-bottom: 7px!important;
+    margin-top: 9px!important;
+    margin-left: 4%;
 }
 
 .x-button {
