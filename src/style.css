@@ -3,6 +3,7 @@
 html, body {
   color: #999999;
   padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 div.tooltip {
@@ -41,6 +42,7 @@ div.tooltip {
     margin-bottom: 7px!important;
     margin-top: 9px!important;
     margin-left: 4%;
+    width: 100%;
 }
 
 .x-button {
@@ -73,9 +75,18 @@ border: #082840;
 padding: 10px 25px;
 margin-left: 5%;
 font-size: 23px;
-font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
 
 
+}
+
+.subNavBar {
+  display: flex;
+    justify-content: space-between;
+
+}
+
+.header-img {
+  margin: 10px;
 }
 
 .nav-button1 {
@@ -86,7 +97,6 @@ border: #082840;
 padding: 10px 25px;
 margin-left: 1%;
 font-size: 23px;
-font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
 
 
 }
@@ -100,7 +110,7 @@ padding: 10px 25px;
 margin-left: 1%;
 font-size: 23px;
 
-font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
+
 
 
 }
@@ -134,14 +144,12 @@ font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-
 .year {
   font-weight: 500;
   font-size: 26px;
-  font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
   color: #999999;
 }
 
 .erc20 {
   font-weight: 500;
   font-size: 26px;
-  font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
   color: #999999;
 }
 
@@ -245,6 +253,5 @@ z-index: 100;
   margin-left: 4%;
   font-weight: 200px;
   color: #999999;
-  font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
 
 }
