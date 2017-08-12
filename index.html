@@ -221,30 +221,15 @@
            return bubbleScale(d.usd_raised) + 1;
          }));
 
-       // upload the csv file
-      // await callback pauses the async function and only fires after csv files loads
-      $.ajax({
-            url: 'https://api.coinmarketcap.com/v1/ticker/?limit=333',
-            type: 'GET',
-            success: function(tokenData) {
-              console.log(tokenData);
-            },
-            error: function(errMsg) {
-              console.log(errMsg);
-          }
-        });
-
        d3.queue()
-        .defer(d3.csv, 'tokenInfo2.csv')
-        .defer(d3.json, 'https://api.coinmarketcap.com/v1/ticker/?limit=333')
-        .await(loaded);
+       .defer(d3.json, 'staticTokenData.json')
+        .defer(d3.json, 'https://api.coinmarketcap.com/v1/ticker/?')
+
+        .awaitAll(loaded);
 
        // defines svg content for resuable component
        // appending a pattern tag which uploads the token logo
        let defs = svg.append("defs");
-
-       // callback passed to await which formats the bubble
-       // first arg must be the first error that may occur
 
        // scale the bubble proportionally give dollar range to px
        let bubbleScale = d3.scaleSqrt().domain([115500,230498884]).range([4,75]);
@@ -252,6 +237,19 @@
 
        function loaded(error, data) {
 
+         var merged = []
+            for (let idx = 0; idx < data[0].length; idx++) {
+              merged.push(data[0][idx].name)
+            }
+            let apiFiltered = [];
+            for (let idx = 0; idx < data[1].length; idx++) {
+              if (merged.includes(data[1][idx].name)) {
+                apiFiltered.push(data[1][idx])
+              }
+            }
+
+            data = $.extend(data[0], apiFiltered)
+            console.log(data);
          defs.selectAll(".token-logo")
            .data(data)
            .enter().append("pattern")
@@ -259,21 +257,20 @@
            .attr("id",
              function(d) {
              // must using global regex to replace more then one space
-             return d.name.replace(/ /g, "-");
+             return d.name;
            })
            .attr("height", "100%")
            .attr("width", "100%")
-
            .attr("patternContentUnits", "objectBoundingBox")
            .append("image")
            .attr("height", 1)
            .attr("width", 1)
            .attr("preserveAspectRatio", "none")
-
            .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
            .attr("xlink:href", function(d) {
              return d.logo_path;
            });
+
 
            showScale();
 
@@ -288,7 +285,12 @@
 
            .attr("fill",
            function(d) {
-              return getFillColor(d.roi);
+
+              if (d.rank >= "200") {
+                return "blue";
+              } else {
+                return "red";
+              }
              })
           .attr('stroke', function (d) {
             return d3.rgb(getFillColor(d.roi)).darker(); })
