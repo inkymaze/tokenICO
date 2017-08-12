@@ -216,6 +216,7 @@
 
        .force("xAxis", d3.forceX(width * 0.7).strength(0.03))
        .force("yAxis", d3.forceY(height * 0.67).strength(0.03))
+
        .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 1;
          }));
@@ -321,8 +322,9 @@
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
          }))
-        .alphaTarget(.5)
-        .restart();
+         .restart()
+        .alphaTarget(.2);
+
        });
 
        d3.select("#alltokens").on('click', function() {
@@ -335,9 +337,9 @@
            .force("preventCollide", d3.forceCollide(function(d) {
              return bubbleScale(d.usd_raised) + 3;
            }))
+           .restart()
+           .alphaTarget(0.2);
 
-           .alphaTarget(0.5)
-           .restart();
 
       ;
        });
@@ -354,8 +356,9 @@
 
          }))
          .velocityDecay(0.4)
-           .alphaTarget(.5)
-           .restart();
+         .restart()
+           .alphaTarget(.2);
+
        });
 
        // nodes equal circle/circles in this case
@@ -370,6 +373,7 @@
          .attr("cy", function(d) {
            return d.y;
          });
+
        }
      }
    });
