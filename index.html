@@ -27,6 +27,9 @@
               $("div.bubbleKey").show();
               $("div.ercAside").hide();
           });
+
+
+
       });
 
     </script>
@@ -93,6 +96,8 @@
 
        let width = 970;
        let height = 550;
+
+
 
 
        let svg = d3.select("#chartCont")
@@ -218,7 +223,21 @@
 
        // upload the csv file
       // await callback pauses the async function and only fires after csv files loads
-       d3.queue().defer(d3.csv, 'tokenInfo2.csv').await(loaded);
+      $.ajax({
+            url: 'https://api.coinmarketcap.com/v1/ticker/?limit=333',
+            type: 'GET',
+            success: function(tokenData) {
+              console.log(tokenData);
+            },
+            error: function(errMsg) {
+              console.log(errMsg);
+          }
+        });
+
+       d3.queue()
+        .defer(d3.csv, 'tokenInfo2.csv')
+        .defer(d3.json, 'https://api.coinmarketcap.com/v1/ticker/?limit=333')
+        .await(loaded);
 
        // defines svg content for resuable component
        // appending a pattern tag which uploads the token logo
