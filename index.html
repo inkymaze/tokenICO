@@ -236,20 +236,8 @@
 
 
        function loaded(error, data) {
-
-         var merged = []
-            for (let idx = 0; idx < data[0].length; idx++) {
-              merged.push(data[0][idx].name)
-            }
-            let apiFiltered = [];
-            for (let idx = 0; idx < data[1].length; idx++) {
-              if (merged.includes(data[1][idx].name)) {
-                apiFiltered.push(data[1][idx])
-              }
-            }
-
-            data = $.extend(data[0], apiFiltered)
-            console.log(data);
+          data = data[0].map(x => Object.assign(x, data[1].find(y => y.name == x.name)));
+          console.log(data);
          defs.selectAll(".token-logo")
            .data(data)
            .enter().append("pattern")
@@ -283,15 +271,10 @@
              return bubbleScale(d.usd_raised);
            })
 
-           .attr("fill",
-           function(d) {
-
-              if (d.rank >= "200") {
-                return "blue";
-              } else {
-                return "red";
-              }
+           .attr("fill", function(d) {
+              return getFillColor(d.roi);
              })
+
           .attr('stroke', function (d) {
             return d3.rgb(getFillColor(d.roi)).darker(); })
 
@@ -299,10 +282,8 @@
           //  function(d) {
           //    return "url(#" + d.name.replace(/ /g, "-") + ")";
           //  })
-
            // loads details of each bubble which will zoom later on click
           .on("mouseover", function(d) {
-
               div.transition()
                   .duration(200)
                   .style("opacity", .95);
@@ -313,6 +294,7 @@
                    "Date: " + d.month + "<br/>" +
                    "Token Sale Price: $" + d.token_sale_price + "<br/>" +
                    "ERC-20 Protocol: " + d.erc20 + "<br/>" +
+                   "Market Cap USD: " + d.market_cap_usd + "<br/>" +
                    "--click for Whitepaper--" + "<br/>");
                    div.append("img")
                                     .attr("src", d.logo_path)
@@ -385,8 +367,6 @@
 
        function ticked() {
          circle
-
-
            .attr("cx", function(d) {
              return d.x;
            })
@@ -402,8 +382,6 @@
    );
 
     </script>
-
     </div>
   </body>
-
 </html>
