@@ -27,11 +27,13 @@
               $("div.bubbleKey").show();
               $("div.ercAside").hide();
           });
-
-
-
       });
-
+      $(document).ready(function(){
+          $(".nav-button3").click(function(){
+              $("div.bubbleKey").hide(50);
+              $("div.ercAside").hide();
+          });
+      });
     </script>
     <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -59,6 +61,7 @@
           <button id="alltokens" class="nav-button0">All Tokens</button>
           <button id="year" class="nav-button1">By Year</button>
           <button id="erc20" class="nav-button2">ERC-20 Tokens</button>
+          <button id="roi" class="nav-button3">ROI</button>
         </div>
         <div class="bubbleMain">
           <div class="bubbleKey">
@@ -176,6 +179,13 @@
          .attr("fill", "#999999")
          .text(function (d) { return d; });
        }
+       function showAxis() {
+
+        xAxis = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+        console.log(xAxis);
+        yAxis = d3.scaleLinear().rangeRound([height, 0]);
+        
+      }
 
        function showScale() {
          let scaleKey = d3.selectAll(".scaleKey").append("circle")
@@ -322,8 +332,9 @@
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
          }))
+         .velocityDecay(0.29)
          .restart()
-        .alphaTarget(.2);
+        .alphaTarget(0.2);
 
        });
 
@@ -358,6 +369,25 @@
          .velocityDecay(0.4)
          .restart()
            .alphaTarget(.2);
+
+       });
+
+       d3.select("#roi").on('click', function() {
+          svg.selectAll('.year').remove();
+          svg.selectAll('.erc20').remove();
+          showAxis();
+
+
+        //  simulation.force("xAxis", forceXErcSplit)
+        //  .force('charge', d3.forceManyBody().strength(-0.5))
+        //  .force("yAxis", d3.forceY(height / 2).strength(0.03))
+        //  .force("preventCollide", d3.forceCollide(function(d) {
+        //    return bubbleScale(d.usd_raised) + 3;
+         //
+        //  }))
+        //  .velocityDecay(0.4)
+        //  .restart()
+        //    .alphaTarget(.2);
 
        });
 

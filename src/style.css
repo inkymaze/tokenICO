@@ -109,10 +109,16 @@ border: #082840;
 padding: 10px 25px;
 margin-left: 1%;
 font-size: 23px;
+}
 
-
-
-
+.nav-button3 {
+color: white;
+background: #082840;
+border-radius: 5px;
+border: #082840;
+padding: 10px 25px;
+margin-left: 1%;
+font-size: 23px;
 }
 
 .colorKey {
