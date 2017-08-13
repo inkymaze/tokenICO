@@ -80,10 +80,6 @@
                   <li> Green = Traded </li>
                   <li> Red = Failed </li>
                   <li> Blue = Not currently traded </li>
-
-
-
-
                 </ul>
               </div>
           </div>
@@ -103,20 +99,13 @@
        let width = 970;
        let height = 550;
 
-
-
-
        let svg = d3.select("#chartCont")
          .append("svg")
          .attr("width", width)
          .attr("height", height)
          .append("g")
-         // centers the bubble in the chartCont
          .attr("transform", "translate(0, 0)");
 
-
-
-         // empty forceX and forceY default to 0
        let forceXsplit = d3.forceX(function(d) {
          if(d.year === 2017) {
            return width * 0.75;
@@ -139,14 +128,11 @@
 
        let div = d3.select("body").append("div")
          .attr("class", "tooltip")
-           .style("opacity", 0);
-
+         .style("opacity", 0);
 
        let ercAside = d3.select("body").append("p")
         .attr("class", "ercAside")
-          .style("opacity", 1);
-
-
+        .style("opacity", 1);
 
        let yearsTitleX = {
        2014: width * 0.04,
@@ -184,13 +170,48 @@
          .attr("fill", "#999999")
          .text(function (d) { return d; });
        }
+
        function showAxis() {
 
-        xAxis = d3.scaleBand().rangeRound([0, width]).padding(0.1);
-        console.log(xAxis);
-        yAxis = d3.scaleLinear().rangeRound([height, 0]);
+        // xAxis = d3.scaleLog().range([0, width])
+                // .domain([dataExtents[currentMode.xDataField][0], dataExtents[currentMode.xDataField][1]]);
+                var x = d3.scaleBand().rangeRound([0, width]);
+                var y = d3.scaleLinear().range([height - 50 , 50]);
+                svg.append("g")
+                .attr("transform", "translate(0,425)")
+                .call(d3.axisBottom(x));
 
-      }
+// Add the Y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
+        // d3.scaleBand().rangeRound([0, width]).padding(0.1);
+        // console.log(xAxis);
+        // yAxis = d3.scaleLog().range([height, 0])
+  //       var yScale = d3.scale.linear()
+  //       .domain([0, 100])    // values between 0 and 100
+  // .range([height, 10]);
+  // let yScale = d3.scaleSqrt().domain([115500,252000000]).range([4,70]).clamp(true);
+  // var yAxis = d3.svg.axis()
+  //           .orient("left")
+  //           .scale(yScale);
+  //               // .domain([dataExtents[currentMode.yDataField][0], dataExtents[currentMode.yDataField][1]]);
+  //       // d3.scaleLinear().rangeRound([height, 0]);
+  //       var xScale = d3.time.scale()
+  //       .domain([0, 10000])    // values between for month of january
+  // .range([0, 1]);
+  //       var xAxis = d3.svg.axis()
+  //         .orient("bottom")
+  //         .scale(xScale);
+      //   svg.append("g")
+      //    .attr("class", "xAxis")   // give it a class so it can be used to select only xaxis labels  below
+      //    .attr("transform", "translate(0," + (height) + ")")
+      //    .call(xAxis);
+      //
+      //
+      // vis.append("g")
+      //      .attr("transform", "translate(0,0)")
+      //      .call(yAxis);
+    }
 
        function showScale() {
          let scaleKey = d3.selectAll(".scaleKey").append("circle")
@@ -245,7 +266,9 @@
        let defs = svg.append("defs");
 
        // scale the bubble proportionally give dollar range to px
-       let bubbleScale = d3.scaleSqrt().domain([115500,252000000]).range([4,70]);
+       let bubbleScale = d3.scaleSqrt().domain([115500,252000000]).range([4,70]).clamp(true);
+
+
 
 
        function loaded(error, data) {
