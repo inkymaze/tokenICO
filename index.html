@@ -75,12 +75,12 @@
     bottom: -8px;">$1,000,000</span></div>
               <svg id="scaleKey" ></svg>
               <div class="colorKey">
-                 <h3 class="keyTitle">ROI (as of July-2017)</h3>
+                 <h3 class="keyTitle">Color indicates current return from ICO</h3>
                 <ul>
 
                   <li> Red = Negative Return </li>
                   <li> Green = Positive Return </li>
-                  <li> Blue = Not yet traded </li>
+                  <li> Blue = Currently not traded </li>
                 </ul>
               </div>
           </div>
@@ -138,6 +138,7 @@
          .attr("class", "tooltip")
            .style("opacity", 0);
 
+
        let ercAside = d3.select("body").append("p")
         .attr("class", "ercAside")
           .style("opacity", 1);
@@ -156,14 +157,15 @@
          'Others': width * 0.22
        };
 
-       function getFillColor(roi) {
-         if(roi === "BLUE") {
-         return "#14303D";
-       } else if (roi === "RED") {
-         return "#d84b2a";
-       } else {
-         return "#7aa25c";
-       }
+       function getFillColor(data) {
+         if((data.token_sale_price && data.price_usd && data.token_sale_price >= data.price_usd ) ||  data.status == "Failed") {
+           return "#d84b2a";
+         } else if (data.token_sale_price && data.price_usd && data.token_sale_price < data.price_usd) {
+          return "#7aa25c";
+        }
+        else {
+         return "#2F708F";
+        }
        }
 
        function showYears() {
@@ -184,7 +186,7 @@
         xAxis = d3.scaleBand().rangeRound([0, width]).padding(0.1);
         console.log(xAxis);
         yAxis = d3.scaleLinear().rangeRound([height, 0]);
-        
+
       }
 
        function showScale() {
@@ -244,6 +246,7 @@
 
 
        function loaded(error, data) {
+
           data = data[0].map(x => Object.assign(x, data[1].find(y => y.name == x.name)));
           console.log(data);
          defs.selectAll(".token-logo")
@@ -280,11 +283,11 @@
            })
 
            .attr("fill", function(d) {
-              return getFillColor(d.roi);
+              return getFillColor(d);
              })
 
           .attr('stroke', function (d) {
-            return d3.rgb(getFillColor(d.roi)).darker(); })
+            return d3.rgb(getFillColor(d)).darker(); })
 
            // loads bubbles with logos but freezes browser
           //  function(d) {
@@ -295,6 +298,7 @@
               div.transition()
                   .duration(200)
                   .style("opacity", .95);
+
 
                   div.html(
                    "<br/>" + d.name + "<br/>" +
@@ -413,6 +417,8 @@
    );
 
     </script>
+
+    <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script>
     </div>
   </body>
 </html>
