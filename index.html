@@ -75,12 +75,15 @@
     bottom: -8px;">$1,000,000</span></div>
               <svg id="scaleKey" ></svg>
               <div class="colorKey">
-                 <h3 class="keyTitle">Color indicates current return from ICO</h3>
+                 <h3 class="keyTitle">Currently Traded</h3>
                 <ul>
+                  <li> Green = Traded </li>
+                  <li> Red = Failed </li>
+                  <li> Blue = Not currently traded </li>
 
-                  <li> Red = Negative Return </li>
-                  <li> Green = Positive Return </li>
-                  <li> Blue = Currently not traded </li>
+
+
+
                 </ul>
               </div>
           </div>
@@ -158,12 +161,12 @@
        };
 
        function getFillColor(data) {
-         if((data.token_sale_price && data.price_usd && data.token_sale_price >= data.price_usd ) ||  data.status == "Failed") {
-           return "#d84b2a";
-         } else if (data.token_sale_price && data.price_usd && data.token_sale_price < data.price_usd) {
-          return "#7aa25c";
-        }
-        else {
+         if(data.price_usd) {
+              return "#7aa25c";
+         } else if (data.status == "Failed") {
+           return "#D84B2A";
+         }else {
+
          return "#2F708F";
         }
        }
