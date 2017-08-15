@@ -173,10 +173,11 @@
 
        function showAxis() {
 
-        // xAxis = d3.scaleLog().range([0, width])
-                // .domain([dataExtents[currentMode.xDataField][0], dataExtents[currentMode.xDataField][1]]);
-                var x = d3.scaleBand().rangeRound([0, width]);
-                var y = d3.scaleLinear().range([height - 50 , 50]);
+
+                let x = d3.scaleBand().rangeRound([0, width]);
+                let y = d3.scaleLinear().range([height - 50 , 50]);
+                x.domain(d3.extent(data, function(d) { return d.year; }));
+                y.domain([0, d3.max(data, function(d) { return d.usd_raised; })]);
                 svg
                 .append("g")
                 .attr("transform", "translate(0,425)")
@@ -276,7 +277,7 @@
        function loaded(error, data) {
 
           data = data[0].map(x => Object.assign(x, data[1].find(y => y.name == x.name)));
-          console.log(data);
+
          defs.selectAll(".token-logo")
            .data(data)
            .enter().append("pattern")
@@ -300,6 +301,8 @@
 
 
            showScale();
+
+
 
          let circle = svg.selectAll("circle")
            .data(data)
