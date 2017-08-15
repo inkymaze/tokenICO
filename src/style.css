@@ -7,11 +7,21 @@ html, body {
 }
 
 .axis path,
-    .axis line {
+    .axis line
+       {
       fill: none;
-      stroke: black;
+      stroke: #999999;
+      font-weight: 400;
+
+
       shape-rendering: crispEdges;
     }
+
+  .yaxis-text {
+    color: #999999;
+    font-family: 'open sans-serif';
+    font-size: 18px;
+  }
 
 div.tooltip {
     position: absolute;
@@ -20,8 +30,8 @@ div.tooltip {
     font-family: 'open sans-serif';
     height:350px;
     padding: 2px;
-    font-size: 29px;
-    line-height: 1.5em;
+    font-size: 22px;
+    line-height: 1.5;
     background: white;
     border: 1px solid #999999;
     border-radius: 8px;

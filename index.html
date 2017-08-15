@@ -118,14 +118,19 @@
          }
        }).strength(0.05);
 
-
-
-
        let forceXErcSplit = d3.forceX(function(d) {
          if(d.erc20 === "TRUE") {
          return width * 0.666;
          } else {
          return width * 0.2;
+         }
+       }).strength(0.05);
+
+       let forceXroi = d3.forceX(function(d) {
+         if (d.token_sale_price !== "N/A"){
+         return d.price_usd / d.token_sale_price ;
+         } else {
+           return 1;
          }
        }).strength(0.05);
 
@@ -267,7 +272,17 @@
 
 
           // let x_domain = d3.extent(data, function(d) { return d.usd_raised / 1000000} );
-          let x_domain = [0.01, d3.max(data, function(d) { return d.price_usd / d.token_sale_price; })];
+          let y_domain = [0.01, d3.max(data, function(d) {
+            if(d.token_sale_price !== "N/A") {
+            return d.price_usd / d.token_sale_price;
+            } else {
+            return 1
+            }
+
+          })];
+
+
+
           // y.domain([0, d3.max(data, function(d) { return d.close; })]);
           // // let y_domain = d3.max(data, function(d) { return d.price_usd; });
           // let xScale = d3.scaleLog()
@@ -277,12 +292,12 @@
           // console.log(d3.max(data, function(d) { return d.price_usd / d.token_sale_price; }));
 
           let yScale = d3.scaleLog()
-          .domain(x_domain).base(2).nice()   // values between for month of january
+          .domain(y_domain).base(2).nice()   // values between for month of january
           .range([height - 75, 50]);   // map these sides of the chart, in this case 100 and 600
           // draw y axis with labels and move in from the size by the amount of padding
           svg.append("g")
           .attr("class", "axis")
-          .attr("transform", "translate(50,0)")
+          .attr("transform", "translate(60,0)")
           .call(d3.axisLeft(yScale));
           // draw x axis with labels and move to the bottom of the chart area
           // svg.append("g")
@@ -291,10 +306,12 @@
           // .call(d3.axisBottom());
 
 
+
           svg.append("text")
+          .attr("class", "yaxis-text")
           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
           .attr("transform", "translate(25,"+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-          .text("Times Return");
+          .text("Times return on $USD");
 
           // svg.append("text")
           // .attr("text-anchor", "middle")
@@ -356,7 +373,8 @@
 
        d3.select("#year").on('click', function() {
          svg.selectAll('.erc20').remove();
-         svg.selectAll('.erc20').remove();
+         svg.selectAll('.yaxis-text').remove();
+         svg.selectAll('.axis').remove();
          showYears();
 
          simulation
@@ -375,6 +393,8 @@
        d3.select("#alltokens").on('click', function() {
          svg.selectAll('.erc20').remove();
          svg.selectAll('.year').remove();
+         svg.selectAll('.yaxis-text').remove();
+         svg.selectAll('.axis').remove();
          simulation.stop();
          simulation.force('charge', d3.forceManyBody().strength(-1))
          .force("xAxis", d3.forceX(width * 0.6).strength(0.03))
@@ -385,12 +405,12 @@
            .restart()
            .alphaTarget(0.2);
 
-
-      ;
        });
 
        d3.select("#erc20").on('click', function() {
           svg.selectAll('.year').remove();
+          svg.selectAll('.yaxis-text').remove();
+          svg.selectAll('.axis').remove();
           showErc();
 
          simulation.force("xAxis", forceXErcSplit)
@@ -403,34 +423,28 @@
          .velocityDecay(0.4)
          .restart()
            .alphaTarget(.2);
-
        });
 
        d3.select("#roi").on('click', function() {
           svg.selectAll('.year').remove();
           svg.selectAll('.erc20').remove();
+
           showAxis();
 
           simulation
           .force('charge', d3.forceManyBody().strength(-0.5))
-          .force("xAxis", forceXsplit)
-          .force("yAxis", d3.forceY(height * 0.535).strength(0.03))
+          .force("xAxis", forceXroi)
+          .force("yAxis", d3.forceY(height / 2).strength(0.03))
           .force("preventCollide", d3.forceCollide(function(d) {
-            return bubbleScale(d.usd_raised) + 2;
+            return bubbleScale(d.usd_raised) + 1;
           }))
           .velocityDecay(0.29)
           .restart()
-         .alphaTarget(0.2);
-
-
-
-
+          .alphaTarget(0.2);
        });
 
-       // nodes equal circle/circles in this case
        simulation.nodes(data)
          .on('tick', ticked);
-
        function ticked() {
          circle
            .attr("cx", function(d) {
@@ -439,18 +453,13 @@
          .attr("cy", function(d) {
            return d.y;
          });
-
        }
-     }
-   });
-
-   window.addEventListener('resize',
-    bubbleChart()
-   );
-
-    </script>
-
-    <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script>
+      }
+     });
+     window.addEventListener('resize',
+      bubbleChart()
+     );
+      </script>
     </div>
   </body>
 </html>
