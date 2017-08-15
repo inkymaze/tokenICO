@@ -171,49 +171,7 @@
          .text(function (d) { return d; });
        }
 
-       function showAxis() {
 
-
-                let x = d3.scaleBand().rangeRound([0, width]);
-                let y = d3.scaleLinear().range([height - 50 , 50]);
-                x.domain(d3.extent(data, function(d) { return d.year; }));
-                y.domain([0, d3.max(data, function(d) { return d.usd_raised; })]);
-                svg
-                .append("g")
-                .attr("transform", "translate(0,425)")
-                .call(d3.axisBottom(x));
-
-// Add the Y Axis
-    svg.append("g")
-        .call(d3.axisLeft(y));
-        // d3.scaleBand().rangeRound([0, width]).padding(0.1);
-        // console.log(xAxis);
-        // yAxis = d3.scaleLog().range([height, 0])
-  //       var yScale = d3.scale.linear()
-  //       .domain([0, 100])    // values between 0 and 100
-  // .range([height, 10]);
-  // let yScale = d3.scaleSqrt().domain([115500,252000000]).range([4,70]).clamp(true);
-  // var yAxis = d3.svg.axis()
-  //           .orient("left")
-  //           .scale(yScale);
-  //               // .domain([dataExtents[currentMode.yDataField][0], dataExtents[currentMode.yDataField][1]]);
-  //       // d3.scaleLinear().rangeRound([height, 0]);
-  //       var xScale = d3.time.scale()
-  //       .domain([0, 10000])    // values between for month of january
-  // .range([0, 1]);
-  //       var xAxis = d3.svg.axis()
-  //         .orient("bottom")
-  //         .scale(xScale);
-      //   svg.append("g")
-      //    .attr("class", "xAxis")   // give it a class so it can be used to select only xaxis labels  below
-      //    .attr("transform", "translate(0," + (height) + ")")
-      //    .call(xAxis);
-      //
-      //
-      // vis.append("g")
-      //      .attr("transform", "translate(0,0)")
-      //      .call(yAxis);
-    }
 
        function showScale() {
          let scaleKey = d3.selectAll(".scaleKey").append("circle")
@@ -253,12 +211,12 @@
        let simulation = d3.forceSimulation()
        .force("charge", d3.forceManyBody().strength([-5]))
        .force("xAxis", d3.forceX(width * 0.7).strength(0.03))
-       .force("yAxis", d3.forceY(height * 0.67).strength(0.03))
+       .force("yAxis", d3.forceY(height * 0.66).strength(0.03))
 
        .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 1;
          }))
-         .velocityDecay(.3);
+         .velocityDecay(.35);
 
        d3.queue()
         .defer(d3.json, 'staticTokenData.json')
@@ -302,7 +260,63 @@
 
            showScale();
 
+          function showAxis() {
+            // let x = d3.scaleTime().range([0, width]);
+            // let y = d3.scaleLinear().range([height - 50, 50]);
+            // x.domain(d3.extent(data, function(d) { return d.year; }));
+            // y.domain(d3.max(data, function(d) { return d.price_usd / d.token_sale_price; }));
+            //
+            // svg.append("g")
+            //   .attr("transform", "translate(0,425)")
+            //   .call(d3.axisBottom(x));
+            //
+            // svg.append("g")
+            //
+            //     .call(d3.axisLeft(y));
+            //
+            // svg.append("text")
+            //   .attr("transform", "rotate(-90)")
+            //   .attr("y", -20)
+            //   .attr("x",0 - (height / 2))
+            //   .attr("dy", "1em")
+            //   .style("text-anchor", "middle")
+            //   .text("X times return");
+let x_domain = [2014,2017];
+let y_domain = [0, d3.max(data, function(d) { return d.price_usd / d.token_sale_price; })];
+// y.domain([0, d3.max(data, function(d) { return d.close; })]);
+// let y_domain = d3.max(data, function(d) { return d.price_usd; });
+let yScale = d3.scaleLog()
+.domain(y_domain).base(2)   // make axis end in round number
+.range([height - 75, 50]);   // map these to the chart height, less padding.  In this case 300 and 100
+     //REMEMBER: y axis range has the bigger number first because the y value of zero is at the top of chart and increases as you go down
 
+     console.log(d3.max(data, function(d) { return d.price_usd / d.token_sale_price; }));
+let xScale = d3.scaleLinear()
+.domain(x_domain)    // values between for month of january
+.range([0, width]);   // map these sides of the chart, in this case 100 and 600
+// draw y axis with labels and move in from the size by the amount of padding
+svg.append("g")
+.attr("class", "axis")
+.attr("transform", "translate(50,0)")
+.call(d3.axisLeft(yScale));
+
+// draw x axis with labels and move to the bottom of the chart area
+svg.append("g")
+.attr("class", "xaxis axis")  // two classes, one for css formatting, one for selection below
+.attr("transform", "translate(0," + (height - 100) + ")")
+.call(d3.axisBottom(xScale));
+
+
+svg.append("text")
+.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+.attr("transform", "translate(25,"+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+.text("Times Return");
+
+        svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "translate("+ (width/2) +","+(height-(50/3))+")")
+        .text("ICO Date");
+            }
 
          let circle = svg.selectAll("circle")
            .data(data)

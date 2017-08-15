@@ -6,6 +6,13 @@ html, body {
   font-family: 'open sans-serif';
 }
 
+.axis path,
+    .axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+    }
+
 div.tooltip {
     position: absolute;
     text-align: center;
@@ -13,8 +20,8 @@ div.tooltip {
     font-family: 'open sans-serif';
     height:350px;
     padding: 2px;
-    font: 29px;
-    line-height: 1.182em;
+    font-size: 29px;
+    line-height: 1.5em;
     background: white;
     border: 1px solid #999999;
     border-radius: 8px;
