@@ -1546,7 +1546,7 @@
   },
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501646446/iota_ws0ljy.png",
-    "name": "Iota",
+    "name": "IOTA",
     "link": "https://iotatoken.com/IOTA_Whitepaper.pdf",
     "status": "Completed",
     "usd_raised": 584000,
@@ -1591,7 +1591,7 @@
   },
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501645229/storj-x_gcgurr.png",
-    "name": "Storj-x",
+    "name": "Storjcoin X",
     "link": "http://blog.storj.io/post/146711695563/what-is-storj-part-1-of-3-the-storj-network",
     "status": "Completed",
     "usd_raised": 461802,
@@ -1741,7 +1741,7 @@
   },
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501644935/bitcrystals_spells_of_genesis_ov29fp.png",
-    "name": "Bitcrystals (Spells of Genesis)",
+    "name": "Bitcrystals",
     "link": "https://www.tokendata.io/bitcrystals.github.io",
     "status": "Completed",
     "usd_raised": 200000,

@@ -10,9 +10,11 @@ div.tooltip {
     position: absolute;
     text-align: center;
     width: 350px;
+    font-family: 'open sans-serif';
     height:350px;
     padding: 2px;
-    font: 29px comic;
+    font: 29px;
+    line-height: 1.182em;
     background: white;
     border: 1px solid #999999;
     border-radius: 8px;
