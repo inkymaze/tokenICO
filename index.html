@@ -5,6 +5,7 @@
     <title>tokenICO</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="src/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="">
     <script>
 
       $(document).ready(function() {
@@ -118,6 +119,12 @@
          }
        }).strength(0.06);
 
+
+
+
+
+
+
        let forceXErcSplit = d3.forceX(function(d) {
          if(d.erc20 === "TRUE") {
          return width * 0.666;
@@ -126,13 +133,6 @@
          }
        }).strength(0.05);
 
-       let forceXroi = d3.forceX(function(d) {
-         if (d.token_sale_price !== "N/A"){
-         return d.price_usd / d.token_sale_price ;
-         } else {
-           return 1;
-         }
-       }).strength(0.05);
 
        let div = d3.select("body").append("div")
          .attr("class", "tooltip")
@@ -235,7 +235,7 @@
        let defs = svg.append("defs");
 
        // scale the bubble proportionally give dollar range to px
-       let bubbleScale = d3.scaleSqrt().domain([115500,252000000]).range([4,70]).clamp(true);
+       let bubbleScale = d3.scaleSqrt().domain([115500,252000000]).range([3,67]).clamp(true);
 
 
 
@@ -312,11 +312,11 @@
           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
           .attr("transform", "translate(25,"+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
           .text("Times return on $USD");
-
+          //
           // svg.append("text")
           // .attr("text-anchor", "middle")
           // .attr("transform", "translate("+ (width/2) +","+(height-(50/3))+")")
-          // .text("USD raised in millions");
+          // .text("Break Even");
         }
 
          let circle = svg.selectAll("circle")
@@ -390,7 +390,7 @@
          simulation.restart()
          .force('charge', d3.forceManyBody().strength(-0.5))
          .force("xAxis", forceXsplit)
-         .force("yAxis", d3.forceY(height * 0.535).strength(0.03))
+         .force("yAxis", d3.forceY(height * 0.535).strength(0.04))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 2;
          }))
@@ -441,32 +441,35 @@
           showAxis();
 
           simulation
-          // .force('charge', d3.forceManyBody().strength(-0.5))
-          .force("yAxis", d3.forceY(function (d) {
-
-            let yScale = d3.scaleLog().domain([1024,0.01]).base(2).range([50,height  -75]).clamp(true);
+            .force("yAxis", d3.forceY(function (d) {
+                console.log(d);
+          let yScale =      d3.scaleLog().domain([1024,0.01]).base(2).range([50,height  -75]).clamp(true);
 
           if (d.price_usd && (d.token_sale_price !== "N/A")) {
             return yScale(d.price_usd/d.token_sale_price);
-
           } else {
-            return 1000;
+            return 720;
           }
-            // let y_domain = [0.01, d3.max(data, function(d) {
-            //   if(d.token_sale_price !== "N/A") {
-            //   return yScale(d.price_usd / d.token_sale_price);
-            //   } else {
-            //   return 1
-            //   }
-            // })];
-            //
-            // let yScale = d3.scaleLog()
-            // .domain(y_domain).base(2).nice()
-            // .range([height - 75, 50]);
 
           }).strength(0.25))
 
-          .force("xAxis", forceXsplit.strength(0.01))
+          .force("xAxis", d3.forceX(function(d) {
+                 if(d.price_usd > 50) {
+                   return width * 0.9;
+                 } else if (d.price_usd > 20) {
+                   return width * 0.8;
+                 } else if (d.price_usd > 5) {
+                   return width * 0.7;
+                 }  else if (d.price_usd > 1) {
+                   return width * 0.6;
+                 } else if (d.price_usd > .1) {
+                   return width * 0.35;
+                 } else if (d.price_usd > .01) {
+                   return width * 0.18;
+                 }else {
+                   return width * 0.11;
+                 }
+               }))
           .velocityDecay(0.2)
 
           .restart()
