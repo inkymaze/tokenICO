@@ -1,6 +1,8 @@
 # tokenICO Bubble Chart
 
-[tokenICO](https://inkymaze.github.io/tokenICO/)
+[Live](https://inkymaze.github.io/tokenICO/)
+
+![homescreen](https://res.cloudinary.com/dbyoymbpd/image/upload/v1502913275/Screen_Shot_2017-08-16_at_12.54.09_PM_t4wvxb.png)
 
 ### Background
 
