@@ -229,10 +229,9 @@
          }))
          .velocityDecay(.35);
 
-       d3.queue()
-        .defer(d3.json, 'staticTokenData.json')
-        .defer(d3.json, 'https://api.coinmarketcap.com/v1/ticker/?')
-        .awaitAll(loaded);
+
+
+
        // defines svg content for resuable component
        // appending a pattern tag which uploads the token logo
        let defs = svg.append("defs");
@@ -240,11 +239,13 @@
        // scale the bubble proportionally give dollar range to px
        let bubbleScale = d3.scaleSqrt().domain([115500,252000000]).range([3,67]).clamp(true);
 
-
+       d3.queue()
+        .defer(d3.json, 'staticTokenData.json')
+        .defer(d3.json, 'https://api.coinmarketcap.com/v1/ticker/?')
+        .awaitAll(loaded);
 
 
        function loaded(error, data) {
-
           data = data[0].map(x => Object.assign(x, data[1].find(y => y.name == x.name)));
 
          defs.selectAll(".token-logo")
@@ -272,43 +273,30 @@
            showScale();
 
         function showAxis() {
-
-
-          // let x_domain = d3.extent(data, function(d) { return d.usd_raised / 1000000} );
           let y_domain = [0.01, d3.max(data, function(d) {
             if(d.token_sale_price !== "N/A") {
             return d.price_usd / d.token_sale_price;
             } else {
-            return 1
+            return 1;
             }
-
           })];
 
-
-
-          // y.domain([0, d3.max(data, function(d) { return d.close; })]);
-          // // let y_domain = d3.max(data, function(d) { return d.price_usd; });
-          // let xScale = d3.scaleLog()
-          // .domain(y_domain).base(2) // make axis end in round number
-          // .range([height - 75, 50]);   // map these to the chart height, less padding.  In this case 300 and 100
-               //REMEMBER: y axis range has the bigger number first because the y value of zero is at the top of chart and increases as you go down
-          // console.log(d3.max(data, function(d) { return d.price_usd / d.token_sale_price; }));
-
           let yScale = d3.scaleLog()
-          .domain(y_domain).base(2).nice()   // values between for month of january
-          .range([height - 75, 50]);   // map these sides of the chart, in this case 100 and 600
-          // draw y axis with labels and move in from the size by the amount of padding
+          .domain(y_domain).base(2).nice()
+          .range([height - 75, 50]);
+
           svg.append("g")
           .attr("class", "axis")
           .attr("transform", "translate(60,0)")
           .call(d3.axisLeft(yScale));
+
+          // let x_domain = d3.extent(data, function(d) { return d.usd_raised / 1000000} );
+
           // draw x axis with labels and move to the bottom of the chart area
           // svg.append("g")
           // .attr("class", "xaxis axis")  // two classes, one for css formatting, one for selection below
           // .attr("transform", "translate(50," + (height - 100) + ")")
           // .call(d3.axisBottom());
-
-
 
           svg.append("text")
           .attr("class", "yaxis-text")
@@ -356,8 +344,6 @@
               div.transition()
                   .duration(200)
                   .style("opacity", .95);
-
-
                   div.html(
                    "<br/>" + d.name + "<br/>" +
                    "USD Raised: $" + d.usd_raised + "<br/>" +
