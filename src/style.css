@@ -28,7 +28,7 @@ div.tooltip {
     text-align: center;
     width: 350px;
     font-family: 'open sans-serif';
-    height:350px;
+    height:360px;
     padding: 2px;
     font-size: 22px;
     line-height: 1.5;
@@ -37,7 +37,7 @@ div.tooltip {
     border-radius: 8px;
     pointer-events: none;
     color: #999999;
-    padding-top: 20px
+    padding-top: 7px
 }
 
 .nav-bar {

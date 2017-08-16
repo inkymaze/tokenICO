@@ -116,7 +116,7 @@
          } else {
            return width * 0.04;
          }
-       }).strength(0.06);
+       }).strength(0.05);
 
        let forceXErcSplit = d3.forceX(function(d) {
          if(d.erc20 === "TRUE") {
@@ -341,15 +341,6 @@
           //  })
            // loads details of each bubble which will zoom later on click
           .on("mouseover", function(d) {
-              let usdPrice;
-              let marketCap
-              if (d.price_usd){
-                usdPrice = d.price_usd;
-                marketCap = d.market_cap_usd
-              } else {
-                usdPrice = "N/A";
-                marketCap = "N/A";
-              }
               div.transition()
                   .duration(200)
                   .style("opacity", .95);
@@ -360,9 +351,8 @@
                    "USD Raised: $" + d.usd_raised + "<br/>" +
                    "Date: " + d.month + "<br/>" +
                    "Token Sale Price: $" + d.token_sale_price + "<br/>" +
-                   "Current Price: $" + usdPrice + "<br/>" +
                    "ERC-20 Protocol: " + d.erc20 + "<br/>" +
-                   "Market Cap: $" + marketCap+ "<br/>" +
+                   "Market Cap: $" + d.market_cap_usd + "<br/>" +
                    "--click for Whitepaper--" + "<br/>");
                    div.append("img")
                                     .attr("src", d.logo_path)
@@ -387,7 +377,8 @@
          svg.selectAll('.axis').remove();
          showYears();
 
-         simulation.force('charge', d3.forceManyBody().strength(-0.5))
+         simulation
+         .force('charge', d3.forceManyBody().strength(-0.5))
          .force("xAxis", forceXsplit)
          .force("yAxis", d3.forceY(height * 0.535).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
@@ -413,6 +404,7 @@
            }))
            .restart()
            .alphaTarget(0.2);
+
        });
 
        d3.select("#erc20").on('click', function() {
@@ -426,6 +418,7 @@
          .force("yAxis", d3.forceY(height / 2).strength(0.03))
          .force("preventCollide", d3.forceCollide(function(d) {
            return bubbleScale(d.usd_raised) + 3;
+
          }))
          .velocityDecay(0.4)
          .restart()
@@ -435,52 +428,19 @@
        d3.select("#roi").on('click', function() {
           svg.selectAll('.year').remove();
           svg.selectAll('.erc20').remove();
+
           showAxis();
 
           simulation
-          // .force('charge', d3.forceManyBody().strength(-0.5))
-          .force("yAxis", d3.forceY(function (d) {
-
-            let yScale = d3.scaleLog().domain([1024,0.01]).base(2).range([0,height  -50]).clamp(true);
-
-            if (d.price_usd ){
-            return yScale(d.price_usd/d.token_sale_price);
-          } else {
-            return 1000;
-          }
-            // let y_domain = [0.01, d3.max(data, function(d) {
-            //   if(d.token_sale_price !== "N/A") {
-            //   return yScale(d.price_usd / d.token_sale_price);
-            //   } else {
-            //   return 1
-            //   }
-            // })];
-            //
-            // let yScale = d3.scaleLog()
-            // .domain(y_domain).base(2).nice()
-            // .range([height - 75, 50]);
-            console.log(yScale);
-
-          }).strength(0.05))
-
-          .force("xAxis", forceXsplit.strength(0.01))
-          .velocityDecay(0.4)
+          .force('charge', d3.forceManyBody().strength(-0.5))
+          .force("xAxis", forceXsplit).strength(0.01)
+          .force("yAxis", d3.forceY(height / 2).strength(0.03))
+          .force("preventCollide", d3.forceCollide(function(d) {
+            return bubbleScale(d.usd_raised) + 1;
+          }))
+          .velocityDecay(0.29)
           .restart()
-            .alphaTarget(.2);
-          // .force("yAxis", d3.forceY(d3.scaleLog().domain([0.01, d3.max(data, function(d) {
-          //   if(d.token_sale_price !== "N/A") {
-          //   return d.price_usd / d.token_sale_price;
-          //   } else {
-          //   return 1
-          //   }
-          //   })]).base(2).nice()
-          //   .range([height - 75, 50]))
-          //   .force("preventCollide", d3.forceCollide(function(d) {
-          //   return bubbleScale(d.usd_raised) + 1;
-          // }))
-          // .velocityDecay(0.29)
-          // .restart()
-          // .alphaTarget(0.2))
+          .alphaTarget(0.2);
        });
 
        simulation.nodes(data)
