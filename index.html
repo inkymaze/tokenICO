@@ -42,8 +42,8 @@
   <body>
     <div class="nav-bar">
       <h1 class="title">tokenICO</h1>
-
     </div>
+
     <div class="outerChart">
       <div class="subNavBar"><div>
       <div class="chartTitle">How crowdsales are experiencing a meteoric rise</div>
@@ -62,35 +62,33 @@
           <button id="erc20" class="nav-button2">ERC-20 Tokens</button>
           <button id="roi" class="nav-button3">ROI</button>
         </div>
+
         <div class="bubbleMain">
           <div class="bubbleKey">
             <p>Bubbles are sized according to USD raised at offering</p>
-            <div style="left:105px;top:105px;width:24px;"class="scaleTag"><span>$100,000,000</span></div>
-            <div style="left: 74px;top: 144px;width: 57px;" class="scaleTag"><span style="left: 58px;
-    bottom: -9px;">$10,000,000</span></div>
-            <div style="left: 72px;
-    top: 164px;
-    width: 63px;" class="scaleTag"><span style="left: 65px;
-    bottom: -8px;">$1,000,000</span></div>
-              <svg id="scaleKey" ></svg>
-              <div class="colorKey">
-                 <h3 class="keyTitle">Currently Traded</h3>
-                <ul>
-                  <li> Green = Traded </li>
-                  <li> Red = Failed </li>
-                  <li> Blue = Not currently traded </li>
-                </ul>
-              </div>
+          <div style="left:105px;top:105px;width:24px;"class="scaleTag"><span>$100,000,000</span></div>
+          <div style="left: 74px;top: 144px;width: 57px;" class="scaleTag"><span style="left: 58px;
+                bottom: -9px;">$10,000,000</span></div>
+          <div style="left: 72px;top: 164px;width: 63px;" class="scaleTag"><span style="left: 65px;
+                bottom: -8px;">$1,000,000</span></div>
+          <svg id="scaleKey" ></svg>
+          <div class="colorKey">
+               <h3 class="keyTitle">Currently Traded</h3>
+              <ul>
+                <li> Green = Traded </li>
+                <li> Red = Failed </li>
+                <li> Blue = Not currently traded </li>
+              </ul>
           </div>
+        </div>
 
-          <div id="chartCont" class="chart" style="display: flex; justify-content: center;"></div>
+        <div id="chartCont" class="chart" style="display: flex; justify-content: center;"></div>
 
-          <div class="ercAside">
-            <p>Listed on the Ethereum network these tokens can be exchanged with other currencies as well as ensure compatibility with dApps of the same standard protocol</p>
-          </div>
-        <div>
-      </div>
-
+        <div class="ercAside">
+          <p>Listed on the Ethereum network these tokens can be exchanged with other currencies as well as ensure compatibility with dApps of the same standard protocol</p>
+        </div>
+      <div>
+    </div>
     </div>
     <script type="text/javascript">
     let bubbleChart = (function() {
@@ -116,12 +114,6 @@
            return width * 0.04;
          }
        }).strength(0.06);
-
-
-
-
-
-
 
        let forceXErcSplit = d3.forceX(function(d) {
          if(d.erc20 === "TRUE") {
@@ -224,9 +216,6 @@
          }))
          .velocityDecay(.35);
 
-
-
-
        // defines svg content for resuable component
        // appending a pattern tag which uploads the token logo
        let defs = svg.append("defs");
@@ -249,7 +238,6 @@
            .attr("class", ".token-logo")
            .attr("id",
              function(d) {
-             // must using global regex to replace more then one space
              return d.name;
            })
            .attr("height", "100%")
@@ -298,7 +286,7 @@
           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
           .attr("transform", "translate(25,"+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
           .text("Times return on $USD");
-          //
+
           // svg.append("text")
           // .attr("text-anchor", "middle")
           // .attr("transform", "translate("+ (width/2) +","+(height-(50/3))+")")
@@ -325,6 +313,7 @@
           //  function(d) {
           //    return "url(#" + d.name.replace(/ /g, "-") + ")";
           //  })
+
            // loads details of each bubble which will zoom later on click
           .on("mouseover", function(d) {
               let usdPrice;
@@ -337,70 +326,69 @@
                 marketCap = "N/A";
               }
               div.transition()
-                  .duration(200)
-                  .style("opacity", .95);
-                  div.html(
-                   "<br/>" + d.name + "<br/>" +
-                   "USD Raised: $" + d.usd_raised + "<br/>" +
-                   "Date: " + d.month + "<br/>" +
-                   "Token Sale Price: $" + d.token_sale_price + "<br/>" +
-                   "Current Price: $" + usdPrice + "<br/>" +
-                   "ERC-20 Protocol: " + d.erc20 + "<br/>" +
-                   "Market Cap: $" + marketCap+ "<br/>" +
-                   "--click for Whitepaper--" + "<br/>");
-                   div.append("img")
-                                    .attr("src", d.logo_path)
-                                    .attr("width","50px")
-                                    .attr("height","50px")
-                   .style("left", (d3.event.pageX) + "px")
-                   .style("top", (d3.event.pageY - 28) + "px");
+                .duration(200)
+                .style("opacity", .95);
+              div.html(
+                "<br/>" + d.name + "<br/>" +
+                "USD Raised: $" + d.usd_raised + "<br/>" +
+                "Date: " + d.month + "<br/>" +
+                "Token Sale Price: $" + d.token_sale_price + "<br/>" +
+                "Current Price: $" + usdPrice + "<br/>" +
+                "ERC-20 Protocol: " + d.erc20 + "<br/>" +
+                "Market Cap: $" + marketCap+ "<br/>" +
+                "--click for Whitepaper--" + "<br/>");
+              div.append("img")
+                .attr("src", d.logo_path)
+                .attr("width","50px")
+                .attr("height","50px")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
               })
           .on("mousemove", function(){return div.style("top", (event.pageY-
               10)+"px").style("left",(event.pageX+10)+"px");})
 
           .on("mouseout", function(d) {
-              div.transition()
-                  .duration(500)
-                  .style("opacity", 0);
+            div.transition()
+              .duration(500)
+              .style("opacity", 0);
            })
            .on("click", function(d) {window.open(d.link); });
 
-       d3.select("#year").on('click', function() {
-         svg.selectAll('.erc20').remove();
-         svg.selectAll('.yaxis-text').remove();
-         svg.selectAll('.axis').remove();
-         showYears();
+        d3.select("#year").on('click', function() {
+          svg.selectAll('.erc20').remove();
+          svg.selectAll('.yaxis-text').remove();
+          svg.selectAll('.axis').remove();
+          showYears();
 
-         simulation.restart()
-         .force('charge', d3.forceManyBody().strength(-0.5))
-         .force("xAxis", forceXsplit)
-         .force("yAxis", d3.forceY(height * 0.535).strength(0.04))
-         .force("preventCollide", d3.forceCollide(function(d) {
-           return bubbleScale(d.usd_raised) + 2;
-         }))
-         .velocityDecay(0.29)
-         .restart()
-        .alphaTarget(0.2);
+          simulation
+            .force('charge', d3.forceManyBody().strength(-0.5))
+            .force("xAxis", forceXsplit)
+            .force("yAxis", d3.forceY(height * 0.535).strength(0.04))
+            .force("preventCollide", d3.forceCollide(function(d) {
+              return bubbleScale(d.usd_raised) + 2;
+            }))
+            .velocityDecay(0.29)
+            .restart()
+            .alphaTarget(0.2);
+        });
 
-       });
-
-       d3.select("#alltokens").on('click', function() {
-         svg.selectAll('.erc20').remove();
-         svg.selectAll('.year').remove();
-         svg.selectAll('.yaxis-text').remove();
-         svg.selectAll('.axis').remove();
-         simulation.stop();
-         simulation.force('charge', d3.forceManyBody().strength(-1))
-         .force("xAxis", d3.forceX(width * 0.6).strength(0.03))
+        d3.select("#alltokens").on('click', function() {
+          svg.selectAll('.erc20').remove();
+          svg.selectAll('.year').remove();
+          svg.selectAll('.yaxis-text').remove();
+          svg.selectAll('.axis').remove();
+          simulation.stop();
+          simulation.force('charge', d3.forceManyBody().strength(-1))
+           .force("xAxis", d3.forceX(width * 0.6).strength(0.03))
            .force("yAxis", d3.forceY(height * 0.5).strength(0.03))
            .force("preventCollide", d3.forceCollide(function(d) {
              return bubbleScale(d.usd_raised) + 3;
            }))
            .restart()
            .alphaTarget(0.2);
-       });
+        });
 
-       d3.select("#erc20").on('click', function() {
+        d3.select("#erc20").on('click', function() {
           svg.selectAll('.year').remove();
           svg.selectAll('.yaxis-text').remove();
           svg.selectAll('.axis').remove();
@@ -416,10 +404,10 @@
          }))
          .velocityDecay(0.4)
          .restart()
-           .alphaTarget(.2);
-       });
+         .alphaTarget(.2);
+        });
 
-       d3.select("#roi").on('click', function() {
+        d3.select("#roi").on('click', function() {
           svg.selectAll('.year').remove();
           svg.selectAll('.erc20').remove();
           showAxis();
@@ -429,23 +417,24 @@
                 console.log(d);
           let yScale =      d3.scaleLog().domain([1024,0.01]).base(2).range([50,height  -75]).clamp(true);
 
-          if (d.price_usd && (d.token_sale_price !== "N/A")) {
+          if(d.price_usd && (d.token_sale_price !== "N/A")) {
             return yScale(d.price_usd/d.token_sale_price);
-          } else {
+           }else{
             return 720;
-          }
+           }
+          }).strength(0.75))
 
-          }).strength(0.25))
-
-          .force("xAxis", d3.forceX(function(d) {
+            .force("xAxis", d3.forceX(function(d) {
                  if(d.price_usd > 50) {
-                   return width * 0.9;
+                   return width * 0.93;
                  } else if (d.price_usd > 20) {
-                   return width * 0.8;
+                   return width * 0.85;
                  } else if (d.price_usd > 5) {
-                   return width * 0.7;
+                   return width * 0.78;
                  }  else if (d.price_usd > 1) {
-                   return width * 0.6;
+                   return width * 0.69;
+                 } else if (d.price_usd > .5) {
+                  return width * 0.52;
                  } else if (d.price_usd > .1) {
                    return width * 0.35;
                  } else if (d.price_usd > .01) {
@@ -454,29 +443,15 @@
                    return width * 0.11;
                  }
                }))
-          .velocityDecay(0.2)
-
-          .restart()
-          .alphaTarget(.2);
-          // .force("yAxis", d3.forceY(d3.scaleLog().domain([0.01, d3.max(data, function(d) {
-          //   if(d.token_sale_price !== "N/A") {
-          //   return d.price_usd / d.token_sale_price;
-          //   } else {
-          //   return 1
-          //   }
-          //   })]).base(2).nice()
-          //   .range([height - 75, 50]))
-          //   .force("preventCollide", d3.forceCollide(function(d) {
-          //   return bubbleScale(d.usd_raised) + 1;
-          // }))
-          // .velocityDecay(0.29)
-          // .restart()
-          // .alphaTarget(0.2))
-       });
+            .velocityDecay(0.2)
+            .restart()
+            .alphaTarget(0.2);
+        });
 
        simulation.nodes(data)
          .on('tick', ticked);
-       function ticked() {
+
+       function ticked(){
          circle
            .attr("cx", function(d) {
              return d.x;
@@ -484,9 +459,9 @@
          .attr("cy", function(d) {
            return d.y;
          });
+        }
        }
-      }
-     });
+      });
      window.addEventListener('resize',
       bubbleChart()
      );
