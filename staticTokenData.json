@@ -62,7 +62,7 @@
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501607930/the-dao-logo_ke5f0k.png",
     "name": "The Dao",
-    "link": "",
+    "link": "https://en.wikipedia.org/wiki/The_DAO_(organization)",
     "status": "Failed",
     "usd_raised": 150000000,
     "month": "16-May",
@@ -107,7 +107,7 @@
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501608367/mOaoxFd_kplcph.png",
     "name": "Basic Attention Token",
-    "link": "https://basicattentiontoken.org/wp-content/uploads/2017/03/BasicAttentionTokenWhitePaper_032117.pdf",
+    "link": "https://basicattentiontoken.org/BasicAttentionTokenWhitePaper-4.pdf",
     "status": "Completed",
     "usd_raised": 36000000,
     "month": "17-May",
@@ -242,7 +242,7 @@
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501610459/images_zelfvb.png",
     "name": "Pillar",
-    "link": "https://us.pillarproject.io/wp-content/uploads/2017/06/PillarProjectGrayPaper.pdf",
+    "link": "https://pillarproject.io/",
     "status": "Completed",
     "usd_raised": 21986902,
     "month": "17-Jul",
@@ -602,7 +602,7 @@
   {
     "logo_path": "https://res.cloudinary.com/dbyoymbpd/image/upload/v1501800744/taas_luveuo.png",
     "name": "TaaS",
-    "link": "http://taas.fund/media/whitepaper.pdf",
+    "link": "https://www.taas.fund/",
     "status": "Completed",
     "usd_raised": 7569374,
     "month": "17-Apr",
