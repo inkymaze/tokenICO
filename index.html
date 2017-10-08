@@ -319,8 +319,8 @@
               let usdPrice;
               let marketCap
               if (d.price_usd){
-                usdPrice = d.price_usd;
-                marketCap = d.market_cap_usd
+                usdPrice = parseInt(d.price_usd).toLocaleString();
+                marketCap = parseInt(d.market_cap_usd).toLocaleString();
               } else {
                 usdPrice = "N/A";
                 marketCap = "N/A";
