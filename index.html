@@ -273,24 +273,11 @@
           .attr("transform", "translate(60,0)")
           .call(d3.axisLeft(yScale));
 
-          // let x_domain = d3.extent(data, function(d) { return d.usd_raised / 1000000} );
-
-          // draw x axis with labels and move to the bottom of the chart area
-          // svg.append("g")
-          // .attr("class", "xaxis axis")  // two classes, one for css formatting, one for selection below
-          // .attr("transform", "translate(50," + (height - 100) + ")")
-          // .call(d3.axisBottom());
-
           svg.append("text")
           .attr("class", "yaxis-text")
           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
           .attr("transform", "translate(25,"+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
           .text("Times return on $USD");
-
-          // svg.append("text")
-          // .attr("text-anchor", "middle")
-          // .attr("transform", "translate("+ (width/2) +","+(height-(50/3))+")")
-          // .text("Break Even");
         }
 
          let circle = svg.selectAll("circle")
@@ -308,11 +295,6 @@
 
           .attr('stroke', function (d) {
             return d3.rgb(getFillColor(d)).darker(); })
-
-           // loads bubbles with logos but freezes browser
-          //  function(d) {
-          //    return "url(#" + d.name.replace(/ /g, "-") + ")";
-          //  })
 
            // loads details of each bubble which will zoom later on click
           .on("mouseover", function(d) {
