@@ -330,7 +330,7 @@
                 .style("opacity", .95);
               div.html(
                 "<br/>" + d.name + "<br/>" +
-                "USD Raised: $" + d.usd_raised + "<br/>" +
+                "USD Raised: $" + parseInt(d.usd_raised).toLocaleString() + "<br/>" +
                 "Date: " + d.month + "<br/>" +
                 "Token Sale Price: $" + d.token_sale_price + "<br/>" +
                 "Current Price: $" + usdPrice + "<br/>" +
